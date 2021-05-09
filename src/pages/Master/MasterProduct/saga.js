@@ -1,5 +1,5 @@
 import { call, put, select, takeLatest } from 'redux-saga/effects';
-import { getProductList } from '../../../api/master';
+import { getProductList, setProductList } from '../../../api/master';
 import { masterProductAction, masterProductSelector } from './slice';
 
 export function* productListLoad() {
@@ -17,8 +17,31 @@ export function* productListLoad() {
     }
 }
 
+export function* saveProductList() {
+    const { saveSuccess, saveFail } = masterProductAction;
+    try {
+        const param = yield select(masterProductSelector.productList)
+        const component = yield select(masterProductSelector.component)
+        const result = yield call(setProductList, param);
+
+        if(result.success) {
+            component.cancelEditData()
+            component.refresh(true)
+        }
+
+        yield put(saveSuccess({
+            success : result.success,
+            code : result.code,
+            msg : result.msg
+        }))
+    } catch (err) {
+        yield put(saveFail(err));
+    }
+}
+
 export function* watchMasterProduct() {
-    const { load } = masterProductAction;
+    const { load, save } = masterProductAction;
 
     yield takeLatest(load, productListLoad);
+    yield takeLatest(save, saveProductList);
 }

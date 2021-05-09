@@ -8,7 +8,7 @@ import { masterProductAction, masterProductSelector } from '../slice'
 const ProductGrid = () => {
     const dispatch = useDispatch()
 
-    const { isLoading, productList, defaultParam } = useSelector(masterProductSelector.all);
+    const { isLoading, success, productList, defaultParam } = useSelector(masterProductSelector.all);
 
     useEffect(() => {
         dispatch(masterProductAction.load());
@@ -18,10 +18,21 @@ const ProductGrid = () => {
         console.log(productList)
     }, [productList])
 
-    const onChangesChange = (param) => {
-        console.log('dd')
-        dispatch(masterProductAction.setProductList(param));
+    const onSaving = (event) => {
+        event.cancel = true;
+
+        if(event.changes.length) {
+            dispatch(masterProductAction.setProductList(event.changes));
+            dispatch(masterProductAction.save(event.component));
+        }
+
+        // console.log(success)
+        // if(success) {
+        //     event.component.cancelEditData();
+        // }
+        // console.log(event)
     }
+
     return (
         <div>
             <DataGrid
@@ -30,8 +41,9 @@ const ProductGrid = () => {
                 columnAutoWidth={true}
                 rowAlternationEnabled={true}
                 showColumnLines={true}
+                onSaving={onSaving}
             >
-            <Editing mode="batch" allowUpdating={true} onChangesChange={onChangesChange}/>
+            <Editing mode="batch" allowUpdating={true} allowAdding={true}/>
             
             <Column dataField="itemCode" caption="제품코드"></Column>
             <Column dataField="itemName" caption="제품명"></Column>

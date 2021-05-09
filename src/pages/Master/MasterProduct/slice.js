@@ -10,6 +10,7 @@ export const initialState = {
     defaultParam: {
         pageable: { size: 10, page: 0 }
     },
+    component: null,
 }
 
 const reducers = {
@@ -19,9 +20,23 @@ const reducers = {
     loadSuccess: (state, { payload : { success, msg, list} }) => {
         state.isLoading = false
         state.productList = list
-        state.success = success
     },
     loadFail: (state, { payload: error }) => {
+        state.isLoading = false
+        state.error = error
+    },
+    save: (state, payload) => {
+        state.isLoading = true
+        state.success = false
+        state.component = payload.payload
+    },
+    saveSuccess: (state, { payload: { success, code, msg } }) => {
+        state.isLoading = false
+        state.success = success
+        state.code = code
+        state.msg = msg
+      },
+    saveFail: (state, { payload: error }) => {
         state.isLoading = false
         state.success = false
         state.error = error
@@ -31,13 +46,25 @@ const reducers = {
             var itemId = value.key;
             var data = value.data;
             var type = value.type;        
-            
+            console.log(type)
+
             var editRow = _.find(state.productList, { itemId : itemId });
             
-            for(var key in data) {
-                if(editRow[key] != data[key]) {
-                    editRow[key] = data[key]
-                }
+            data['itemType'] = 'ITM001' // 제품
+
+            switch(type) {
+                case "insert":
+                    data['createUser'] = '1'
+                    state.productList.push(data)
+                    break;
+                case "update":
+                    data['updateUser'] = '1'
+                    for(var key in data) {
+                        if(editRow[key] != data[key]) {
+                            editRow[key] = data[key]
+                        }
+                    }
+                    break;
             }
         })
     }
@@ -81,6 +108,11 @@ const selectDefualtParamState = createSelector(
     (defaultParam) => defaultParam
 )
 
+const selectComponentState = createSelector(
+    (state) => state.component,
+    (component) => component
+)
+
 const selectAllState = createSelector(
     selectLoadingState,
     selectErrorState,
@@ -107,6 +139,7 @@ export const masterProductSelector = {
     msg: (state) => selectMsgState(state[MASTER_PRODUCT]),
     productList : (state) => selectProductListState(state[MASTER_PRODUCT]),
     defaultParam: (state) => selectDefualtParamState(state[MASTER_PRODUCT]),
+    component: (state) => selectComponentState(state[MASTER_PRODUCT]),
     all: (state) => selectAllState(state[MASTER_PRODUCT])
 }
 
