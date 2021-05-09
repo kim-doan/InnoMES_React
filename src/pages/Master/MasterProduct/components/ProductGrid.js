@@ -18,6 +18,12 @@ const ProductGrid = () => {
         console.log(productList)
     }, [productList])
 
+    useEffect(() => {
+        if(success) {
+            dispatch(masterProductAction.load());
+        }
+    }, [success])
+
     const onSaving = (event) => {
         event.cancel = true;
 

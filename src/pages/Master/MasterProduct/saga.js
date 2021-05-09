@@ -9,6 +9,7 @@ export function* productListLoad() {
         const param = yield select(masterProductSelector.defaultParam);
         const result = yield call(getProductList, param);
 
+        console.log(result)
         yield put(loadSuccess({
             list : result.list,
         }));
@@ -26,7 +27,6 @@ export function* saveProductList() {
 
         if(result.success) {
             component.cancelEditData()
-            component.refresh(true)
         }
 
         yield put(saveSuccess({

@@ -35,7 +35,7 @@ const reducers = {
         state.success = success
         state.code = code
         state.msg = msg
-      },
+    },
     saveFail: (state, { payload: error }) => {
         state.isLoading = false
         state.success = false
@@ -54,6 +54,7 @@ const reducers = {
 
             switch(type) {
                 case "insert":
+                    data['itemId'] = value.key.rowIndex;
                     data['createUser'] = '1'
                     state.productList.push(data)
                     break;
