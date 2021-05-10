@@ -51,8 +51,8 @@ const ProductGrid = () => {
             >
             <Editing mode="batch" allowUpdating={true} allowAdding={true}/>
             
-            <Column dataField="itemCode" caption="제품코드"></Column>
-            <Column dataField="itemName" caption="제품명"></Column>
+            <Column dataField="itemCode" caption="제품코드" fixed={true}></Column>
+            <Column dataField="itemName" caption="제품명" fixed={true}></Column>
             <Column dataField="prdtType" caption="제품유형">
                 <Lookup dataSource={ConvertToLookUp('CommonCode', 'ITM001')} displayExpr="codeKR" valueExpr="code"></Lookup>
             </Column>
