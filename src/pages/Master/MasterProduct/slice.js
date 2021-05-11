@@ -46,7 +46,6 @@ const reducers = {
             var itemId = value.key;
             var data = value.data;
             var type = value.type;        
-            console.log(type)
 
             var editRow = _.find(state.productList, { itemId : itemId });
             
