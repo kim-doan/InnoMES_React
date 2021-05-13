@@ -1,5 +1,7 @@
+import { TablePagination } from '@material-ui/core'
 import { DataGrid } from 'devextreme-react'
 import { Column, Editing, Lookup, Pager, Paging } from 'devextreme-react/data-grid'
+import CustomStore from 'devextreme/data/custom_store'
 import React, { useEffect, useState } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import { ConvertToLookUp } from '../../../../common/LookUp/lookUpUtils'
@@ -8,7 +10,7 @@ import { masterProductAction, masterProductSelector } from '../slice'
 const ProductGrid = () => {
     const dispatch = useDispatch()
 
-    const { isLoading, success, productList, defaultParam } = useSelector(masterProductSelector.all);
+    const { isLoading, success, productList, defaultParam, totalCount } = useSelector(masterProductSelector.all);
 
     useEffect(() => {
         dispatch(masterProductAction.load());
@@ -44,6 +46,7 @@ const ProductGrid = () => {
             console.log("new page index is " + e.value);
         }
     }
+
     return (
         <div>
             <DataGrid
@@ -57,7 +60,7 @@ const ProductGrid = () => {
             >
                 <Editing mode="batch" allowUpdating={true} allowAdding={true} />
 
-                <Paging defaultPageSize={5}></Paging>
+                <Paging></Paging>
                 <Pager
                     showPageSizeSelector={true}
                     allowedPageSizes={[5, 10, 20]}
@@ -107,6 +110,28 @@ const ProductGrid = () => {
                     <Lookup dataSource={ConvertToLookUp('CommonCode', 'ITA004')} displayExpr="codeKR" valueExpr="code"></Lookup>
                 </Column>
             </DataGrid>
+            <TablePagination
+                component="div"
+                count={totalCount}
+                page={defaultParam.pageable.page}
+                rowsPerPage={defaultParam.pageable.size}
+                backIconButtonText={'이전페이지'}
+                labelRowsPerPage={'페이지 당 행: '}
+                nextIconButtonText={'다음페이지'}
+                labelDisplayedRows={({ from, to, count }) => from + ' - ' + to + ' / ' + count}
+                onChangePage={(event, newPage) => {
+                    dispatch(masterProductAction.setDefaultParam({
+                        ...defaultParam,
+                        pageable: { page: newPage, size: defaultParam.pageable.size }
+                    }))
+                }}
+                onChangeRowsPerPage={(event) => {
+                    dispatch(masterProductAction.setDefaultParam({
+                        ...defaultParam,
+                        pageable: { page: defaultParam.pageable.page, size: parseInt(event.target.value)}
+                    }))
+                }}
+            />
         </div>
     )
 }

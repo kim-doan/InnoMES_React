@@ -11,15 +11,17 @@ export const initialState = {
         pageable: { size: 10, page: 0 }
     },
     component: null,
+    totalCount: 0,
 }
 
 const reducers = {
     load: (state, payload) => {
         state.isLoading = true
     },
-    loadSuccess: (state, { payload : { success, msg, list} }) => {
+    loadSuccess: (state, { payload : { success, msg, list, totalCount} }) => {
         state.isLoading = false
         state.productList = list
+        state.totalCount = totalCount
     },
     loadFail: (state, { payload: error }) => {
         state.isLoading = false
@@ -67,7 +69,10 @@ const reducers = {
                     break;
             }
         })
-    }
+    },
+    setDefaultParam: (state, payload) => {
+        state.defaultParam = payload.payload;
+    },
 }
 
 const name = "MASTER_PRODUCT"
@@ -113,6 +118,11 @@ const selectComponentState = createSelector(
     (component) => component
 )
 
+const selectTotalCountState = createSelector(
+    (state) => state.totalCount,
+    (totalCount) => totalCount
+)
+
 const selectAllState = createSelector(
     selectLoadingState,
     selectErrorState,
@@ -120,14 +130,16 @@ const selectAllState = createSelector(
     selectMsgState,
     selectProductListState,
     selectDefualtParamState,
-    (isLoading, error, success, msg, productList, defaultParam) => {
+    selectTotalCountState,
+    (isLoading, error, success, msg, productList, defaultParam, totalCount) => {
         return {
             isLoading,
             error,
             success,
             msg,
             productList,
-            defaultParam
+            defaultParam,
+            totalCount
         }
     }
 )
@@ -140,6 +152,7 @@ export const masterProductSelector = {
     productList : (state) => selectProductListState(state[MASTER_PRODUCT]),
     defaultParam: (state) => selectDefualtParamState(state[MASTER_PRODUCT]),
     component: (state) => selectComponentState(state[MASTER_PRODUCT]),
+    totalCount: (state) => selectTotalCountState(state[MASTER_PRODUCT]),
     all: (state) => selectAllState(state[MASTER_PRODUCT])
 }
 
