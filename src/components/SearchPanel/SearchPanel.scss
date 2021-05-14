@@ -1,0 +1,27 @@
+.dx-button.dx-button-success {
+    width: 10%;
+}
+.search-btn {
+    text-align : right;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+.search-btn .dx-button-text {
+    font-size: 15px;
+    font-weight: 800;
+}
+
+.dx-button-has-icon.dx-button-has-text .dx-icon {
+    width: 20px;
+    font-size: 25px;
+}
+
+.dx-accordion-item-body {
+    overflow: hidden;
+    padding: 12px;
+    font-size: 12px;
+}
+
+.dx-accordion-item-opened > .dx-accordion-item-title {
+    height: 30px;
+}

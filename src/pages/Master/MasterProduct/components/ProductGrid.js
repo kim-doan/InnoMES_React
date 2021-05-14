@@ -5,12 +5,13 @@ import CustomStore from 'devextreme/data/custom_store'
 import React, { useEffect, useState } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import { ConvertToLookUp } from '../../../../common/LookUp/lookUpUtils'
+import { toastAction } from '../../../../common/Toast/slice'
 import { masterProductAction, masterProductSelector } from '../slice'
 
 const ProductGrid = () => {
     const dispatch = useDispatch()
 
-    const { isLoading, success, productList, defaultParam, totalCount } = useSelector(masterProductSelector.all);
+    const { isLoading, success, msg, productList, defaultParam, totalCount } = useSelector(masterProductSelector.all);
 
     useEffect(() => {
         dispatch(masterProductAction.load());
@@ -23,6 +24,10 @@ const ProductGrid = () => {
     useEffect(() => {
         if (success) {
             dispatch(masterProductAction.load());
+            dispatch(toastAction.show({type : 'success', message: '제품정보를 저장하였습니다.'}))
+        } else {
+            dispatch(masterProductAction.load());
+            dispatch(toastAction.show({type : 'error', msg}))
         }
     }, [success])
 
@@ -33,12 +38,6 @@ const ProductGrid = () => {
             dispatch(masterProductAction.setProductList(event.changes));
             dispatch(masterProductAction.save(event.component));
         }
-
-        // console.log(success)
-        // if(success) {
-        //     event.component.cancelEditData();
-        // }
-        // console.log(event)
     }
 
     const onOptionChanged = (e) => {
@@ -57,6 +56,10 @@ const ProductGrid = () => {
                 showColumnLines={true}
                 onSaving={onSaving}
                 onOptionChanged={onOptionChanged}
+                loadPanel={{
+                    showIndicator: true,
+                    enabled: true
+                }}
             >
                 <Editing mode="batch" allowUpdating={true} allowAdding={true} />
 

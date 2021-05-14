@@ -18,7 +18,7 @@ const reducers = {
     load: (state, payload) => {
         state.isLoading = true
     },
-    loadSuccess: (state, { payload : { success, msg, list, totalCount} }) => {
+    loadSuccess: (state, { payload : { list, totalCount} }) => {
         state.isLoading = false
         state.productList = list
         state.totalCount = totalCount

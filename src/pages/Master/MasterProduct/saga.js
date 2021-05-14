@@ -12,7 +12,6 @@ export function* productListLoad() {
         console.log(result)
         yield put(loadSuccess({
             list : result.list,
-            msg : result.msg,
             totalCount : result.totalCount
         }));
     } catch (err) {
