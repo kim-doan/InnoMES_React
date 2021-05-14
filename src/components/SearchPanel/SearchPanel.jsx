@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from 'react'
 import { SelectBox } from 'devextreme-react/select-box';
 import './SearchPanel.scss'
-import { Accordion, Button } from 'devextreme-react';
+import { Accordion, Button, TextBox } from 'devextreme-react';
 import ResponsiveBox, { Item, Location, Row, Col } from 'devextreme-react/responsive-box';
 import Form, { GroupItem, SimpleItem, ButtonItem, Label } from 'devextreme-react/form';
 import { ConvertToLookUp } from '../../common/LookUp/lookUpUtils'
@@ -11,10 +11,6 @@ const SearchPanel = (props) => {
 
     useEffect(() => {
     }, [])
-
-    useEffect(() => {
-        console.log(searchParam)
-    }, [searchParam])
 
     const selectBoxDisplay = (item) => {
         return item && item.codeKR
@@ -27,6 +23,13 @@ const SearchPanel = (props) => {
         })
     }
     
+    const enterKeyPress = (param) => {
+        console.log('dd')
+        if (param.event.key === 'Enter') {
+          searchBtnClick()
+        }
+      }
+
     const searchBtnClick = () => {
         props.mainSearch(searchParam)
     }
@@ -43,7 +46,7 @@ const SearchPanel = (props) => {
     const AutoPanel = (panelList) => {
         return panelList.map(
             (column, index) => (<SimpleItem key={index}>
-                {column.bindType === 'CommonCode' ? (
+                {column.bindType === 'CommonCode' && column.componentType === 'lookUp' && (
                     <SelectBox
                         showTitle={true}
                         dataSource={ConvertToLookUp(column.bindType, column.bindTypePCode)}
@@ -53,10 +56,19 @@ const SearchPanel = (props) => {
                         value={searchParam[column.fieldName]}
                         placeholder={'검색어를 입력하십시오.'}
                         onValueChanged={(e) => changeItem(e, column.fieldName)}
+                        onEnterKey={enterKeyPress}
                     >
                     </SelectBox>
-                )
-                : undefined}
+                )}
+                {column.bindType === 'none' && (
+                    <TextBox 
+                        placeholder={'검색어를 입력하십시오.'}
+                        value={searchParam[column.fieldName]}
+                        showClearButton={true} 
+                        onValueChanged={(e) => changeItem(e, column.fieldName)}
+                        onEnterKey={enterKeyPress}
+                    />
+                )}
                 <Label text={column.title}></Label>
             </SimpleItem>)
         )

@@ -17,9 +17,9 @@ const ProductGrid = () => {
         dispatch(masterProductAction.load());
     }, [defaultParam])
 
-    useEffect(() => {
-        console.log(productList)
-    }, [productList])
+    // useEffect(() => {
+    //     console.log(productList)
+    // }, [productList])
 
     useEffect(() => {
         if (success) {
@@ -40,6 +40,7 @@ const ProductGrid = () => {
         if(e.fullName === "paging.pageIndex") {
             console.log("new page index is " + e.value);
         }
+        console.log(e)
     }
 
     return (
