@@ -24,13 +24,13 @@ const SearchPanel = (props) => {
     }
     
     const enterKeyPress = (param) => {
-        console.log('dd')
-        if (param.event.key === 'Enter') {
+        if (param.key === 'Enter') {
           searchBtnClick()
         }
       }
 
     const searchBtnClick = () => {
+        console.log(searchParam)
         props.mainSearch(searchParam)
     }
 
@@ -46,6 +46,7 @@ const SearchPanel = (props) => {
     const AutoPanel = (panelList) => {
         return panelList.map(
             (column, index) => (<SimpleItem key={index}>
+                <form onKeyPress={enterKeyPress}>
                 {column.bindType === 'CommonCode' && column.componentType === 'lookUp' && (
                     <SelectBox
                         showTitle={true}
@@ -56,7 +57,6 @@ const SearchPanel = (props) => {
                         value={searchParam[column.fieldName]}
                         placeholder={'검색어를 입력하십시오.'}
                         onValueChanged={(e) => changeItem(e, column.fieldName)}
-                        onEnterKey={enterKeyPress}
                     >
                     </SelectBox>
                 )}
@@ -66,10 +66,10 @@ const SearchPanel = (props) => {
                         value={searchParam[column.fieldName]}
                         showClearButton={true} 
                         onValueChanged={(e) => changeItem(e, column.fieldName)}
-                        onEnterKey={enterKeyPress}
                     />
                 )}
                 <Label text={column.title}></Label>
+                </form>
             </SimpleItem>)
         )
     }
