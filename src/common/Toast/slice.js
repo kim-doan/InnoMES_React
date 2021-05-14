@@ -16,7 +16,6 @@ const reducers = {
     },
     hide: (state) => {
         state.isVisible = false;
-        state.type = 'info';
         state.message = '';
         state.displayTime = 1000;
     }

@@ -1,3 +1,3 @@
 export default {
-  title: 'Innomes'
+  title: 'MES'
 };

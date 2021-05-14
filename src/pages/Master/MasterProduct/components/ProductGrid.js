@@ -24,10 +24,6 @@ const ProductGrid = () => {
     useEffect(() => {
         if (success) {
             dispatch(masterProductAction.load());
-            dispatch(toastAction.show({type : 'success', message: '제품정보를 저장하였습니다.'}))
-        } else {
-            dispatch(masterProductAction.load());
-            dispatch(toastAction.show({type : 'error', msg}))
         }
     }, [success])
 
@@ -47,7 +43,7 @@ const ProductGrid = () => {
     }
 
     return (
-        <div>
+        <div style={{padding: 10}}>
             <DataGrid
                 dataSource={productList}
                 keyExpr="itemId"

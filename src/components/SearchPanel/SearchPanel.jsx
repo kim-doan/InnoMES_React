@@ -28,7 +28,7 @@ const SearchPanel = (props) => {
     }
     
     const searchBtnClick = () => {
-        props.searchParamChanged(searchParam)
+        props.mainSearch(searchParam)
     }
 
     const colCountByScreen = {
@@ -51,7 +51,7 @@ const SearchPanel = (props) => {
                         valueExpr="code"
                         searchEnabled={true}
                         value={searchParam[column.fieldName]}
-                        placeholder={'검색'}
+                        placeholder={'검색어를 입력하십시오.'}
                         onValueChanged={(e) => changeItem(e, column.fieldName)}
                     >
                     </SelectBox>

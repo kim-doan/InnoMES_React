@@ -11,15 +11,22 @@ import { masterProductAction, masterProductSelector } from './slice'
 const MasterProduct = () => {
     const dispatch = useDispatch()
 
-    const { isLoading, success, productList, defaultParam } = useSelector(masterProductSelector.all);
+    const { defaultParam } = useSelector(masterProductSelector.all);
 
     useEffect(() => {
         dispatch(masterProductAction.load());
     }, [defaultParam])
 
+    const mainSearch = (searchParam) => {
+        dispatch(masterProductAction.setDefaultParam({
+            ...defaultParam,
+            searchParam: searchParam
+        }))
+    }
+
     return (
         <div>
-            <SearchPanel list={SearchRequirement.getData()}></SearchPanel>
+            <SearchPanel mainSearch={mainSearch} list={SearchRequirement.getData()}></SearchPanel>
             <ProductGrid></ProductGrid>
         </div>
     )
