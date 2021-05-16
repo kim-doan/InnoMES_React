@@ -1,4 +1,4 @@
-import { TablePagination } from '@material-ui/core'
+import { Card, TablePagination } from '@material-ui/core'
 import { DataGrid } from 'devextreme-react'
 import { Column, Editing, Lookup, Pager, Paging } from 'devextreme-react/data-grid'
 import CustomStore from 'devextreme/data/custom_store'
@@ -44,7 +44,8 @@ const ProductGrid = () => {
     }
 
     return (
-        <div style={{padding: 10}}>
+        <div style={{padding: 20, paddingTop: 5}}>
+            <Card>
             <DataGrid
                 dataSource={productList}
                 keyExpr="itemId"
@@ -132,6 +133,7 @@ const ProductGrid = () => {
                     }))
                 }}
             />
+            </Card>
         </div>
     )
 }
