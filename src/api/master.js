@@ -8,7 +8,7 @@ const getProductList = (param) => {
   var pageable = new URLSearchParams()
   pageable.append('size', param.pageable.size)
   pageable.append('page', param.pageable.page)
-
+  console.log(param);
   return axios
     .post(address + '/master/item/products?' + pageable.toString(), param.searchParam)
     .then((response) => response.data)

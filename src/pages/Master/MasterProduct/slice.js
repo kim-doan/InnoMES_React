@@ -57,6 +57,7 @@ const reducers = {
                 case "insert":
                     data['itemId'] = value.key.rowIndex;
                     data['createUser'] = '1'
+                    data['used'] = 1
                     state.productList.push(data)
                     break;
                 case "update":

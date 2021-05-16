@@ -10,6 +10,8 @@ import { AuthProvider, useAuth } from './contexts/auth';
 import { useScreenSizeClass } from './utils/media-query';
 import Content from './Content';
 import UnauthenticatedContent from './UnauthenticatedContent';
+import krMessage from './language/kr.json'
+import {locale, loadMessages} from "devextreme/localization"
 
 import { Provider } from 'react-redux'
 import createStore from './store'
@@ -32,6 +34,8 @@ function App() {
 
 export default function () {
   const screenSizeClass = useScreenSizeClass();
+  loadMessages(krMessage);
+  locale(navigator.language);
 
   return (
     <Provider store={store}>
