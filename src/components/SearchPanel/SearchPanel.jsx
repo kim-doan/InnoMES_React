@@ -68,8 +68,8 @@ const SearchPanel = (props) => {
                         onValueChanged={(e) => changeItem(e, column.fieldName)}
                     />
                 )}
-                <Label text={column.title}></Label>
                 </form>
+                <Label text={column.title}></Label>
             </SimpleItem>)
         )
     }
