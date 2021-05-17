@@ -28,7 +28,7 @@ const data = [
     fieldName: 'prdtGroup'
   },
   {
-    title: '날짜테스트',
+    title: '날짜 Between',
     componentType: 'dateBetween',
     bindType: 'none',
     bindTypePCode: '',
@@ -36,6 +36,14 @@ const data = [
     defaultValue : new Date(),
     fieldName2: 'endDate',
     defaultValue2 : new Date()
+  },
+  {
+    title: '날짜 DateField',
+    componentType: 'dateField',
+    bindType: 'none',
+    bindTypePCode: '',
+    fieldName: 'dateFieldTest',
+    defaultValue : new Date()
   }
 ];
 

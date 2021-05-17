@@ -80,6 +80,9 @@ const SearchPanel = (props) => {
                     >
                     </SelectBox>
                 )}
+                {column.bindType === 'none' && column.componentType === 'dateField' && (
+                    <DateBox defaultValue={column.defaultValue} value={searchParam[column.fieldName]} type="date" onValueChanged={(e) => changeItem(e, column.fieldName)}/>
+                )}
                 {column.bindType === 'none' && column.componentType === 'dateBetween' && (
                     <div className='dateBetween'>
                         <DateBox defaultValue={column.defaultValue} value={searchParam[column.fieldName]} type="date" width={'50%'} 
