@@ -1,14 +1,14 @@
 const data = [
   {
     title: "제품코드",
-    componentType: '',
+    componentType: 'textField',
     bindType: 'none',
     bindTypePCode: '',
     fieldName: 'itemCode'
   },
   {
     title: "제품명",
-    componentType: '',
+    componentType: 'textField',
     bindType: 'none',
     bindTypePCode: '',
     fieldName: 'itemName'
@@ -26,6 +26,16 @@ const data = [
     bindType: 'CommonCode',
     bindTypePCode: 'GRP001',
     fieldName: 'prdtGroup'
+  },
+  {
+    title: '날짜테스트',
+    componentType: 'dateBetween',
+    bindType: 'none',
+    bindTypePCode: '',
+    fieldName: 'startDate',
+    defaultValue : new Date(),
+    fieldName2: 'endDate',
+    defaultValue2 : new Date()
   }
 ];
 

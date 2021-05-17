@@ -1,7 +1,7 @@
-import React, {useEffect, useState} from 'react'
+import React, { useEffect, useState } from 'react'
 import { SelectBox } from 'devextreme-react/select-box';
 import './SearchPanel.scss'
-import { Accordion, Button, TextBox } from 'devextreme-react';
+import { Accordion, Button, DateBox, TextBox } from 'devextreme-react';
 import ResponsiveBox, { Item, Location, Row, Col } from 'devextreme-react/responsive-box';
 import Form, { GroupItem, SimpleItem, ButtonItem, Label } from 'devextreme-react/form';
 import { ConvertToLookUp } from '../../common/LookUp/lookUpUtils'
@@ -10,43 +10,63 @@ const SearchPanel = (props) => {
     const [searchParam, setSearchParam] = useState({})
 
     useEffect(() => {
-    }, [])
+        console.log(searchParam)
+    }, [searchParam])
+
+    useEffect(() => {
+        props.list.forEach(el => {
+            el.defaultValue !== undefined && (
+                setSearchParam({
+                    ...searchParam,
+                    [el.fieldName]: el.defaultValue
+                })
+            )
+            el.defaultValue2 !== undefined && (
+                setSearchParam({
+                    ...searchParam,
+                    [el.fieldName]: el.defaultValue,
+                    [el.fieldName2]: el.defaultValue2
+                })
+            )
+        }
+        )
+    }, [props.list])
 
     const selectBoxDisplay = (item) => {
         return item && item.codeKR
-      }
+    }
 
     const changeItem = (item, fieldName) => {
         setSearchParam({
             ...searchParam,
-             [fieldName] : item.value 
+            [fieldName]: item.value
         })
     }
-    
-    const enterKeyPress = (param) => {
-        if (param.key === 'Enter') {
-          searchBtnClick()
-        }
-      }
 
     const searchBtnClick = () => {
-        console.log(searchParam)
         props.mainSearch(searchParam)
     }
 
     const colCountByScreen = {
         sm: 2,
-        md: 5
-      }
+        md: 3,
+        lg: 5
+    }
 
     function screenByWidth(width) {
-        return width < 720 ? 'sm' : 'md'
+        if(width < 1660 && width >= 1010)
+            return 'md';
+        else if (width < 1010)
+            return 'sm';
+        else
+            return 'lg';
+
+        // return width < 1660 ? 'sm' : 'md'
     }
 
     const AutoPanel = (panelList) => {
         return panelList.map(
             (column, index) => (<SimpleItem key={index}>
-                <form onKeyPress={enterKeyPress}>
                 {column.bindType === 'CommonCode' && column.componentType === 'lookUp' && (
                     <SelectBox
                         showTitle={true}
@@ -60,15 +80,23 @@ const SearchPanel = (props) => {
                     >
                     </SelectBox>
                 )}
-                {column.bindType === 'none' && (
-                    <TextBox 
+                {column.bindType === 'none' && column.componentType === 'dateBetween' && (
+                    <div className='dateBetween'>
+                        <DateBox defaultValue={column.defaultValue} value={searchParam[column.fieldName]} type="date" width={'50%'} 
+                                onValueChanged={(e) => changeItem(e, column.fieldName)}/>
+                        <b className='gubun'>~</b>
+                        <DateBox defaultValue={column.defaultValue2} value={searchParam[column.fieldName2]} type="date" width={'50%'} 
+                                onValueChanged={(e) => changeItem(e, column.fieldName)}/>
+                    </div>
+                )}
+                {column.bindType === 'none' && column.componentType === 'textField' && (
+                    <TextBox
                         placeholder={'검색어를 입력하십시오.'}
                         value={searchParam[column.fieldName]}
-                        showClearButton={true} 
+                        showClearButton={true}
                         onValueChanged={(e) => changeItem(e, column.fieldName)}
                     />
                 )}
-                </form>
                 <Label text={column.title}></Label>
             </SimpleItem>)
         )
@@ -89,10 +117,10 @@ const SearchPanel = (props) => {
                                     colCountByScreen={colCountByScreen}
                                     screenByWidth={screenByWidth}
                                 >
-                                    {AutoPanel(props.list)}                                  
+                                    {AutoPanel(props.list)}
                                 </Form>
                                 <div className='search-btn'>
-                                <Button 
+                                    <Button
                                         // icon="search"
                                         width={150}
                                         height={40}
@@ -100,14 +128,14 @@ const SearchPanel = (props) => {
                                         type="success"
                                         stylingMode="contained"
                                         onClick={searchBtnClick}
-                                />
+                                    />
                                 </div>
                             </Item>
                         </Accordion>
                     </div>
                 </div>
             </div>
-      </div>
+        </div>
     )
 }
 
