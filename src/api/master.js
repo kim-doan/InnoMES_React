@@ -1,6 +1,6 @@
 import axios from 'axios'
 
-let address = 'http://localhost:8090/api'
+let address = 'http://localhost:8080/api'
 axios.defaults.headers.post['language'] = 'KR'
 
 //제품 정보 API
