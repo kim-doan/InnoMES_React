@@ -5,7 +5,7 @@ export const ConvertToLookUp = (bindType, bindTypePCode) => {
     /* 코드 정보 */
     case 'CommonCode':
       const codePool = JSON.parse(localStorage.getItem('CodePool'))
-      return codePool[bindTypePCode]
+      return _.sortBy(codePool[bindTypePCode], 'code')
     /* 품목 정보 */
     case 'Item':
       const itemPool = JSON.parse(localStorage.getItem('ItemPool'))

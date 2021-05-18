@@ -4,8 +4,19 @@ import appInfo from './app-info';
 import routes from './app-routes';
 import { SideNavOuterToolbar as SideNavBarLayout } from './layouts';
 import { Footer } from './components';
+import { Toast } from 'devextreme-react/toast';
+import { useSelector, useDispatch } from 'react-redux'
+import { toastAction, toastSelector } from './common/Toast/slice';
 
-export default function() {
+export default function () {
+  const dispatch = useDispatch()
+
+  const { isVisible, type, message, displayTime } = useSelector(toastSelector.all);
+
+  const onHiding = () => {
+    dispatch(toastAction.hide());
+  }
+
   return (
     <SideNavBarLayout title={appInfo.title}>
       <Switch>
@@ -19,6 +30,13 @@ export default function() {
         ))}
         <Redirect to={'/home'} />
       </Switch>
+      <Toast
+        visible={isVisible}
+        message={message}
+        type={type}
+        onHiding={onHiding}
+        displayTime={displayTime}
+      />
       <Footer>
         Copyright © 2011-{new Date().getFullYear()} {appInfo.title} Inc.
         <br />

@@ -1,5 +1,6 @@
 import { call, put, select, takeLatest } from 'redux-saga/effects';
 import { getProductList, setProductList } from '../../../api/master';
+import { toastAction } from '../../../common/Toast/slice';
 import { masterProductAction, masterProductSelector } from './slice';
 
 export function* productListLoad() {
@@ -9,9 +10,9 @@ export function* productListLoad() {
         const param = yield select(masterProductSelector.defaultParam);
         const result = yield call(getProductList, param);
 
-        console.log(result)
         yield put(loadSuccess({
             list : result.list,
+            totalCount : result.totalCount
         }));
     } catch (err) {
         yield put(loadFail(err));
@@ -20,6 +21,7 @@ export function* productListLoad() {
 
 export function* saveProductList() {
     const { saveSuccess, saveFail } = masterProductAction;
+    const { show } = toastAction;
     try {
         const param = yield select(masterProductSelector.productList)
         const component = yield select(masterProductSelector.component)
@@ -27,6 +29,10 @@ export function* saveProductList() {
 
         if(result.success) {
             component.cancelEditData()
+            yield put(show({type : 'success', message: '제품정보를 저장하였습니다.'}));
+        } else {
+            component.cancelEditData()
+            yield put(show({type : 'error', message: '제품정보 저장에 실패했습니다.'}));
         }
 
         yield put(saveSuccess({

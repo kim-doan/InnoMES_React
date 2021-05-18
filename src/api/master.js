@@ -1,6 +1,6 @@
 import axios from 'axios'
 
-let address = 'http://localhost:8080/api'
+let address = 'http://localhost:8090/api'
 axios.defaults.headers.post['language'] = 'KR'
 
 //제품 정보 API
@@ -8,7 +8,7 @@ const getProductList = (param) => {
   var pageable = new URLSearchParams()
   pageable.append('size', param.pageable.size)
   pageable.append('page', param.pageable.page)
-
+  console.log(param)
   return axios
     .post(address + '/master/item/products?' + pageable.toString(), param.searchParam)
     .then((response) => response.data)
