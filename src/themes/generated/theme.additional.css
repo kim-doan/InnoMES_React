@@ -36,40 +36,6 @@
   font-weight: 400;
   font-style: normal;
 }
-
-@font-face {
-  font-family: 'Noto Sans CJK KR';
-  font-style: normal;
-  font-weight: 100;
-  src: url("../../styles/fonts/NotoSansKR-Light.otf") format('truetype');
-  unicode-range: U+AC00-U+D7A3
-}
-
-@font-face {
-  font-family: 'Noto Sans CJK KR';
-  font-style: normal;
-  font-weight: normal;
-  src: url("../../styles/fonts/NotoSansKR-Regular.otf") format('truetype');
-  unicode-range: U+AC00-U+D7A3
-}
-
-
-@font-face {
-  font-family: 'Noto Sans CJK KR';
-  font-style: normal;
-  font-weight: 500;
-  src: url("../../styles/fonts/NotoSansKR-Medium.otf") format('truetype');
-  unicode-range: U+AC00-U+D7A3
-}
-
-@font-face {
-  font-family: 'Noto Sans CJK KR';
-  font-style: normal;
-  font-weight: bold;
-  src: url("../../styles/fonts/NotoSansKR-Bold.otf") format('truetype');
-  unicode-range: U+AC00-U+D7A3
-}
-
 .dx-swatch-additional .dx-validationsummary-item {
   cursor: pointer;
 }
@@ -130,14 +96,14 @@
   color: #fff;
   font-weight: 400;
   font-size: 14px;
-  font-family: 'Noto Sans CJK KR', Roboto,RobotoFallback,"Noto Kufi Arabic",Helvetica,Arial,sans-serif;
+  font-family: Roboto,RobotoFallback,"Noto Kufi Arabic",Helvetica,Arial,sans-serif;
   line-height: 1.2857;
 }
 .dx-theme-material-typography .dx-swatch-additional input,
 .dx-theme-material-typography .dx-swatch-additional textarea,
 .dx-theme-material-typography.dx-swatch-additional input,
 .dx-theme-material-typography.dx-swatch-additional textarea {
-  font-family: 'Noto Sans CJK KR', Roboto,RobotoFallback,"Noto Kufi Arabic",Helvetica,Arial,sans-serif;
+  font-family: Roboto,RobotoFallback,"Noto Kufi Arabic",Helvetica,Arial,sans-serif;
   line-height: 1.2857;
 }
 .dx-theme-material-typography .dx-swatch-additional h1,
@@ -1616,7 +1582,7 @@
   color: #fff;
   font-weight: 400;
   font-size: 14px;
-  font-family: 'Noto Sans CJK KR', Roboto,RobotoFallback,"Noto Kufi Arabic",Helvetica,Arial,sans-serif;
+  font-family: Roboto,RobotoFallback,"Noto Kufi Arabic",Helvetica,Arial,sans-serif;
   line-height: 1.2857;
 }
 .dx-swatch-additional .dx-widget,
@@ -1640,7 +1606,7 @@
 }
 .dx-swatch-additional .dx-widget input,
 .dx-swatch-additional .dx-widget textarea {
-  font-family: 'Noto Sans CJK KR', Roboto,RobotoFallback,"Noto Kufi Arabic",Helvetica,Arial,sans-serif;
+  font-family: Roboto,RobotoFallback,"Noto Kufi Arabic",Helvetica,Arial,sans-serif;
   line-height: 1.2857;
 }
 .dx-swatch-additional .dx-state-disabled .dx-widget,
@@ -1681,7 +1647,7 @@
   color: #fff;
   font-weight: 400;
   font-size: 14px;
-  font-family: 'Noto Sans CJK KR', Roboto,RobotoFallback,"Noto Kufi Arabic",Helvetica,Arial,sans-serif;
+  font-family: Roboto,RobotoFallback,"Noto Kufi Arabic",Helvetica,Arial,sans-serif;
   line-height: 1.2857;
   padding: 0;
   display: -webkit-box;
@@ -1733,7 +1699,7 @@
 }
 .dx-swatch-additional .dx-field input,
 .dx-swatch-additional .dx-field textarea {
-  font-family: 'Noto Sans CJK KR', Roboto,RobotoFallback,"Noto Kufi Arabic",Helvetica,Arial,sans-serif;
+  font-family: Roboto,RobotoFallback,"Noto Kufi Arabic",Helvetica,Arial,sans-serif;
   line-height: 1.2857;
 }
 .dx-swatch-additional .dx-field-label i {
@@ -3865,7 +3831,7 @@
   color: #fff;
   font-weight: 400;
   font-size: 14px;
-  font-family: 'Noto Sans CJK KR', Roboto,RobotoFallback,"Noto Kufi Arabic",Helvetica,Arial,sans-serif;
+  font-family: Roboto,RobotoFallback,"Noto Kufi Arabic",Helvetica,Arial,sans-serif;
   line-height: 1.2857;
 }
 .dx-swatch-additional .dx-overlay-wrapper,
@@ -3906,7 +3872,7 @@
 }
 .dx-swatch-additional .dx-overlay-wrapper input,
 .dx-swatch-additional .dx-overlay-wrapper textarea {
-  font-family: 'Noto Sans CJK KR', Roboto,RobotoFallback,"Noto Kufi Arabic",Helvetica,Arial,sans-serif;
+  font-family: Roboto,RobotoFallback,"Noto Kufi Arabic",Helvetica,Arial,sans-serif;
   line-height: 1.2857;
 }
 .dx-swatch-additional .dx-validationsummary-item {
