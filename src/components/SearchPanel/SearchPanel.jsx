@@ -60,8 +60,6 @@ const SearchPanel = (props) => {
             return 'sm';
         else
             return 'lg';
-
-        // return width < 1660 ? 'sm' : 'md'
     }
 
     const AutoPanel = (panelList) => {
