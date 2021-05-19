@@ -12,6 +12,8 @@
     "date-fns": "^2.21.1",
     "devextreme": "^20.2.4",
     "devextreme-react": "20.2.3",
+    "exceljs": "^4.2.1",
+    "file-saver": "^2.0.5",
     "lodash": "^4.17.21",
     "node-sass": "^4.11.0",
     "react": "^16.2.0",
