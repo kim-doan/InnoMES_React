@@ -12,6 +12,15 @@ export const navigation = [
         text: '제품정보관리',
         path: '/master/product'
       },
+      {
+        text: '제조공정관리',
+        items: [
+          {
+            text: '제조공정정보',
+            path: '/master/manufactureProcess'
+          }
+        ]
+      }
     ]
   }
   ];

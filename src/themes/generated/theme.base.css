@@ -13723,14 +13723,14 @@
 .dx-datagrid-rowsview .dx-selection.dx-row:not(.dx-row-focused) > tr > td,
 .dx-datagrid-rowsview .dx-selection.dx-row:not(.dx-row-focused):hover > td,
 .dx-datagrid-rowsview .dx-selection.dx-row:not(.dx-row-focused):hover > tr > td {
-  background-color: rgba(255,87,34,.04);
+  background-color: rgba(9,54,135,.3);
   color: rgba(0,0,0,.87);
 }
 .dx-datagrid-rowsview .dx-selection.dx-row:not(.dx-row-focused) > td.dx-datagrid-group-space,
 .dx-datagrid-rowsview .dx-selection.dx-row:not(.dx-row-focused) > tr > td.dx-datagrid-group-space,
 .dx-datagrid-rowsview .dx-selection.dx-row:not(.dx-row-focused):hover > td.dx-datagrid-group-space,
 .dx-datagrid-rowsview .dx-selection.dx-row:not(.dx-row-focused):hover > tr > td.dx-datagrid-group-space {
-  border-right-color: rgba(255,87,34,.04);
+  border-right-color: rgba(9,54,135,.3);
 }
 .dx-datagrid-rowsview .dx-selection.dx-row:not(.dx-row-focused) > td.dx-pointer-events-none,
 .dx-datagrid-rowsview .dx-selection.dx-row:not(.dx-row-focused) > tr > td.dx-pointer-events-none,
@@ -13741,8 +13741,8 @@
 }
 .dx-datagrid-rowsview .dx-selection.dx-row:not(.dx-row-focused):hover:not(.dx-row-lines) > td,
 .dx-datagrid-rowsview .dx-selection.dx-row:not(.dx-row-focused):not(.dx-row-lines) > td {
-  border-bottom: 1px solid rgba(255,87,34,.04);
-  border-top: 1px solid rgba(255,87,34,.04);
+  border-bottom: 1px solid rgba(9,54,135,.3);
+  border-top: 1px solid rgba(9,54,135,.3);
 }
 .dx-datagrid-rowsview .dx-selection.dx-row:not(.dx-row-focused).dx-row-lines > td,
 .dx-datagrid-rowsview .dx-selection.dx-row:not(.dx-row-focused):hover.dx-row-lines > td {
@@ -13931,7 +13931,7 @@
 .dx-rtl .dx-datagrid-rowsview .dx-selection.dx-row > tr > td:not(.dx-focused).dx-datagrid-group-space,
 .dx-rtl .dx-datagrid-rowsview .dx-selection.dx-row:hover > td:not(.dx-focused).dx-datagrid-group-space,
 .dx-rtl .dx-datagrid-rowsview .dx-selection.dx-row:hover > tr > td:not(.dx-focused).dx-datagrid-group-space {
-  border-left-color: rgba(255,87,34,.04);
+  border-left-color: rgba(9,54,135,.3);
 }
 .dx-rtl .dx-datagrid-rowsview .dx-selection.dx-row > td.dx-pointer-events-none,
 .dx-rtl .dx-datagrid-rowsview .dx-selection.dx-row > tr > td.dx-pointer-events-none,
@@ -16195,14 +16195,14 @@ input.dx-hidden {
 .dx-treelist-rowsview .dx-selection.dx-row:not(.dx-row-focused) > tr > td,
 .dx-treelist-rowsview .dx-selection.dx-row:not(.dx-row-focused):hover > td,
 .dx-treelist-rowsview .dx-selection.dx-row:not(.dx-row-focused):hover > tr > td {
-  background-color: rgba(255,87,34,.04);
+  background-color: rgba(9,54,135,.3);
   color: rgba(0,0,0,.87);
 }
 .dx-treelist-rowsview .dx-selection.dx-row:not(.dx-row-focused) > td.dx-treelist-group-space,
 .dx-treelist-rowsview .dx-selection.dx-row:not(.dx-row-focused) > tr > td.dx-treelist-group-space,
 .dx-treelist-rowsview .dx-selection.dx-row:not(.dx-row-focused):hover > td.dx-treelist-group-space,
 .dx-treelist-rowsview .dx-selection.dx-row:not(.dx-row-focused):hover > tr > td.dx-treelist-group-space {
-  border-right-color: rgba(255,87,34,.04);
+  border-right-color: rgba(9,54,135,.3);
 }
 .dx-treelist-rowsview .dx-selection.dx-row:not(.dx-row-focused) > td.dx-pointer-events-none,
 .dx-treelist-rowsview .dx-selection.dx-row:not(.dx-row-focused) > tr > td.dx-pointer-events-none,
@@ -16213,8 +16213,8 @@ input.dx-hidden {
 }
 .dx-treelist-rowsview .dx-selection.dx-row:not(.dx-row-focused):hover:not(.dx-row-lines) > td,
 .dx-treelist-rowsview .dx-selection.dx-row:not(.dx-row-focused):not(.dx-row-lines) > td {
-  border-bottom: 1px solid rgba(255,87,34,.04);
-  border-top: 1px solid rgba(255,87,34,.04);
+  border-bottom: 1px solid rgba(9,54,135,.3);
+  border-top: 1px solid rgba(9,54,135,.3);
 }
 .dx-treelist-rowsview .dx-selection.dx-row:not(.dx-row-focused).dx-row-lines > td,
 .dx-treelist-rowsview .dx-selection.dx-row:not(.dx-row-focused):hover.dx-row-lines > td {
@@ -16403,7 +16403,7 @@ input.dx-hidden {
 .dx-rtl .dx-treelist-rowsview .dx-selection.dx-row > tr > td:not(.dx-focused).dx-treelist-group-space,
 .dx-rtl .dx-treelist-rowsview .dx-selection.dx-row:hover > td:not(.dx-focused).dx-treelist-group-space,
 .dx-rtl .dx-treelist-rowsview .dx-selection.dx-row:hover > tr > td:not(.dx-focused).dx-treelist-group-space {
-  border-left-color: rgba(255,87,34,.04);
+  border-left-color: rgba(9,54,135,.3);
 }
 .dx-rtl .dx-treelist-rowsview .dx-selection.dx-row > td.dx-pointer-events-none,
 .dx-rtl .dx-treelist-rowsview .dx-selection.dx-row > tr > td.dx-pointer-events-none,
@@ -25208,7 +25208,7 @@ input.dx-hidden {
   background-color: rgba(0,0,0,.87);
 }
 .dx-gantt .dx-gantt-sel {
-  background-color: rgba(255,87,34,.04);
+  background-color: rgba(9,54,135,.3);
 }
 .dx-gantt .dx-gantt-conn-v {
   border-left-color: rgba(0,0,0,.87);

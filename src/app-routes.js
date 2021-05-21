@@ -1,6 +1,7 @@
 import { withNavigationWatcher } from './contexts/navigation';
 import { HomePage } from './pages';
 import MasterProduct from './pages/Master/MasterProduct/MasterProduct';
+import MasterManufactureProcess from './pages/Master/MasterManufactureProcess/MasterManufactureProcess';
 
 const routes = [
   {
@@ -10,6 +11,10 @@ const routes = [
   {
     path: '/master/product',
     component: MasterProduct
+  },
+  {
+    path: '/master/manufactureProcess',
+    component: MasterManufactureProcess
   }
 ];
 
