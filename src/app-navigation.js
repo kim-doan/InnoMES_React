@@ -13,5 +13,15 @@ export const navigation = [
         path: '/master/product'
       },
     ]
+  },
+  {
+    text: '구매관리',
+    icon: 'folder',
+    items: [
+      {
+        text: '구매발주관리',
+        path: '/purchase/purchaseOrder'
+      }
+    ]
   }
   ];
