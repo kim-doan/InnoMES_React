@@ -7,6 +7,8 @@ import { masterProductReducer, MASTER_PRODUCT } from '../pages/Master/MasterProd
 import { toastReducer, TOAST } from '../common/Toast/slice'
 import { masterManufactureReducer, MASTER_MANUFACTURE_PROCESS } from '../pages/Master/MasterManufactureProcess/slice'
 import { watchMasterManufactureProcess } from '../pages/Master/MasterManufactureProcess/saga'
+import { purchaseOrderReducer, PURCHASE_ORDER } from '../pages/Purchase/PurchaseOrder/slice'
+import { watchPurchaseOrder } from '../pages/Purchase/PurchaseOrder/saga'
 
 
 export const rootReducer = combineReducers({
@@ -15,6 +17,8 @@ export const rootReducer = combineReducers({
     [MASTER_MANUFACTURE_PROCESS] : masterManufactureReducer,
     //Common
     [TOAST] : toastReducer,
+    //Purchase
+    [PURCHASE_ORDER] : purchaseOrderReducer
 })
 
 const sagaMiddleware = createSagaMiddleware()
@@ -22,7 +26,8 @@ const sagaMiddleware = createSagaMiddleware()
 export function* rootSaga() {
     yield all([
         watchMasterProduct(),
-        watchMasterManufactureProcess()
+        watchMasterManufactureProcess(),
+        watchPurchaseOrder()
     ])
 }
 
