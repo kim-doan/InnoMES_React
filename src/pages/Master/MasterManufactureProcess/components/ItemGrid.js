@@ -1,7 +1,7 @@
 import { Card, TablePagination } from "@material-ui/core";
 import { DataGrid } from "devextreme-react";
 import { Column, Editing, Lookup } from "devextreme-react/data-grid";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux"
 import { ConvertToLookUp } from "../../../../common/Grid/lookUpUtils";
 import { masterManufactureAction, masterManufactureSelector } from "../slice";
@@ -10,6 +10,7 @@ import { masterManufactureAction, masterManufactureSelector } from "../slice";
 const ItemGrid = () => {
     const dispatch = useDispatch();
     const { manufactureList, defaultParam, totalCount } = useSelector(masterManufactureSelector.all);
+    const [selectedRowKeys, setSelectedRowKeys] = useState(0);
 
     useEffect(() => {
         dispatch(masterManufactureAction.load());
@@ -19,9 +20,16 @@ const ItemGrid = () => {
         console.log(manufactureList)
     }, [manufactureList])
 
-    const onSelectionChanged = (param) => {
-        if(param.selectedRowsData.length > 0) {
-            dispatch(masterManufactureAction.setRouteList(param.selectedRowsData[0].routeList))
+    const onFocusedRowChanged = (e) => {
+        if(e.rowIndex > -1) {
+            dispatch(masterManufactureAction.setRouteList(e.row.data.routeList))
+        }
+    }
+
+    const onOptionChanged = (e) => {
+        if(e.fullName == 'focusedRowIndex') {
+            if(e.value > -1)
+                setSelectedRowKeys(e.value);
         }
     }
 
@@ -31,15 +39,17 @@ const ItemGrid = () => {
                 <DataGrid
                     dataSource={manufactureList}
                     keyExpr="prdtId"
-                    selection={{ mode: 'single' }}
+                    focusedRowIndex={selectedRowKeys}
+                    focusedRowEnabled={true}
                     columnAutoWidth={true}
                     rowAlternationEnabled={true}
+                    onOptionChanged={onOptionChanged}
                     showColumnLines={true}
                     loadPanel={{
                         showIndicator: true,
                         enabled: true,
                     }}
-                    onSelectionChanged={onSelectionChanged}
+                    onFocusedRowChanged={onFocusedRowChanged}
                 >
                     <Column dataField="itemCode" caption="제품코드" fixed={true}></Column>
                     <Column dataField="itemName" caption="제품명" fixed={true}></Column>

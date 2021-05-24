@@ -34,15 +34,14 @@ const MasterManufactureProcess = () => {
             >
             </SearchPanel>
             <ResponsiveBox>
-                <Row ratio={1}></Row>
-                <Row ratio={1}></Row>
-                <Col ratio={1}></Col>
-                <Col ratio={1}></Col>
+                <Row></Row>
+                <Row></Row>
+                <Col></Col>
+                <Col></Col>
                 <Item>
                     <Location
                         row={0}
                         col={0}
-                        // colspan={1}
                     >
                     </Location>
                     <ItemGrid></ItemGrid>
@@ -51,11 +50,30 @@ const MasterManufactureProcess = () => {
                     <Location
                         row={0}
                         col={1}
-                        // colspan={1}
                     >
                     </Location>
-                    <RouteGrid></RouteGrid>
-                    <RouteGrid></RouteGrid>
+                    <ResponsiveBox>
+                        <Row></Row>
+                        <Row></Row>
+                        <Col></Col>
+
+                        <Item>
+                            <Location
+                                row={0}
+                                col={0}
+                            >
+                            </Location>
+                            <RouteGrid></RouteGrid>
+                        </Item>
+                        <Item>
+                            <Location
+                                row={1}
+                                col={0}
+                            >
+                            </Location>
+                            <RouteGrid></RouteGrid>
+                        </Item>
+                    </ResponsiveBox>
                 </Item>
 
             </ResponsiveBox>

@@ -108,7 +108,7 @@ const SearchPanel = (props) => {
               value={searchParam[column.fieldName2]}
               type="date"
               width={"50%"}
-              onValueChanged={(e) => changeItem(e, column.fieldName)}
+              onValueChanged={(e) => changeItem(e, column.fieldName2)}
             />
           </div>
         )}

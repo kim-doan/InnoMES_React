@@ -23,6 +23,7 @@ const RouteGrid = () => {
                         showIndicator: true,
                         enabled: true,
                     }}
+                    height={280}
                 >
                     <Column dataField="procCode" caption="공정코드" fixed={true}></Column>
                     <Column dataField="procName" caption="공정명" fixed={true}></Column>
