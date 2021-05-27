@@ -8,8 +8,9 @@ export const initialState = {
     success : undefined,
     msg: null,
     manufactureList: [],
+    routeList: [],
     defaultParam: {
-        pageablee: { size: 10, page: 0 }
+        pageable: { size: 10, page: 0 }
     },
     totalCount: 0
 }
@@ -27,6 +28,12 @@ const reducers = {
         state.isLoading = false
         state.error = error
     },
+    setDefaultParam: (state, payload) => {
+        state.defaultParam = payload.payload;
+    },
+    setRouteList: (state, payload) => {
+        state.routeList = payload.payload;
+    }
 }
 
 const name = "MASTER_MANUFACTURE_PROCESS"
@@ -73,33 +80,41 @@ const selectTotalCountState = createSelector(
     (totalCount) => totalCount
 )
 
+const selectRouteListState = createSelector(
+    (state) => state.routeList,
+    (routeList) => routeList
+)
+
 const selectAllState = createSelector(
     selectLoadingState,
     selectErrorState,
     selectSuccessState,
     selectMsgState,
     selectManufactureListState,
+    selectRouteListState,
     selectDefaultParamState,
     selectTotalCountState,
-    (isLoading, error, success, msg, manufactureList, defaultParam, totalCount) => {
+    (isLoading, error, success, msg, manufactureList, routeList, defaultParam, totalCount) => {
         return {
             isLoading,
             error,
             success,
             msg,
             manufactureList,
+            routeList,
             defaultParam,
             totalCount
         }
     }
 )
 
-export const masterManufactureProcessSelector = {
+export const masterManufactureSelector = {
     isLoading: (state) => selectLoadingState(state[MASTER_MANUFACTURE_PROCESS]),
     error: (state) => selectErrorState(state[MASTER_MANUFACTURE_PROCESS]),
     success: (state) => selectSuccessState(state[MASTER_MANUFACTURE_PROCESS]),
     msg: (state) => selectMsgState(state[MASTER_MANUFACTURE_PROCESS]),
     manufactureList: (state) => selectManufactureListState(state[MASTER_MANUFACTURE_PROCESS]),
+    routeList: (state) => selectRouteListState(state[MASTER_MANUFACTURE_PROCESS]),
     defaultParam: (state) => selectDefaultParamState(state[MASTER_MANUFACTURE_PROCESS]),
     totalCount: (state) => selectTotalCountState(state[MASTER_MANUFACTURE_PROCESS]),
     all: (state) => selectAllState(state[MASTER_MANUFACTURE_PROCESS])
