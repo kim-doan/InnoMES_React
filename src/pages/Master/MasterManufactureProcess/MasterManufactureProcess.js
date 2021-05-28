@@ -2,7 +2,9 @@ import { ResponsiveBox } from "devextreme-react";
 import { Col, Item, Location, Row } from "devextreme-react/responsive-box";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux"
+import ControlBox from "../../../components/ControlBox/ControlBox";
 import SearchPanel from "../../../components/SearchPanel/SearchPanel";
+import BomGrid from "./components/BomGrid";
 import ItemGrid from "./components/ItemGrid";
 import RouteGrid from "./components/RouteGrid";
 import SearchRequirement from "./SearchRequirement";
@@ -33,6 +35,7 @@ const MasterManufactureProcess = () => {
                 list={SearchRequirement.getData()}
             >
             </SearchPanel>
+            <ControlBox></ControlBox>
             <ResponsiveBox>
                 <Row></Row>
                 <Row></Row>
@@ -71,7 +74,7 @@ const MasterManufactureProcess = () => {
                                 col={0}
                             >
                             </Location>
-                            <RouteGrid></RouteGrid>
+                            <BomGrid></BomGrid>
                         </Item>
                     </ResponsiveBox>
                 </Item>

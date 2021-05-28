@@ -9,6 +9,7 @@ export const initialState = {
     msg: null,
     manufactureList: [],
     routeList: [],
+    bomList: [],
     defaultParam: {
         pageable: { size: 10, page: 0 }
     },
@@ -33,6 +34,9 @@ const reducers = {
     },
     setRouteList: (state, payload) => {
         state.routeList = payload.payload;
+    },
+    setBomList: (state, payload) => {
+        state.bomList = payload.payload;
     }
 }
 
@@ -85,6 +89,11 @@ const selectRouteListState = createSelector(
     (routeList) => routeList
 )
 
+const selectBomListState = createSelector(
+    (state) => state.bomList,
+    (bomList) => bomList
+)
+
 const selectAllState = createSelector(
     selectLoadingState,
     selectErrorState,
@@ -92,9 +101,10 @@ const selectAllState = createSelector(
     selectMsgState,
     selectManufactureListState,
     selectRouteListState,
+    selectBomListState,
     selectDefaultParamState,
     selectTotalCountState,
-    (isLoading, error, success, msg, manufactureList, routeList, defaultParam, totalCount) => {
+    (isLoading, error, success, msg, manufactureList, routeList, bomList, defaultParam, totalCount) => {
         return {
             isLoading,
             error,
@@ -102,6 +112,7 @@ const selectAllState = createSelector(
             msg,
             manufactureList,
             routeList,
+            bomList,
             defaultParam,
             totalCount
         }
@@ -115,6 +126,7 @@ export const masterManufactureSelector = {
     msg: (state) => selectMsgState(state[MASTER_MANUFACTURE_PROCESS]),
     manufactureList: (state) => selectManufactureListState(state[MASTER_MANUFACTURE_PROCESS]),
     routeList: (state) => selectRouteListState(state[MASTER_MANUFACTURE_PROCESS]),
+    bomList: (state) => selectBomListState(state[MASTER_MANUFACTURE_PROCESS]),
     defaultParam: (state) => selectDefaultParamState(state[MASTER_MANUFACTURE_PROCESS]),
     totalCount: (state) => selectTotalCountState(state[MASTER_MANUFACTURE_PROCESS]),
     all: (state) => selectAllState(state[MASTER_MANUFACTURE_PROCESS])

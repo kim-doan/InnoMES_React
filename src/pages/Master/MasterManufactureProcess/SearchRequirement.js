@@ -14,6 +14,13 @@ const data = [
     fieldName: 'itemName'
   },
   {
+    title: '제품유형',
+    componentType: 'lookUp',
+    bindType: 'CommonCode',
+    bindTypePCode: 'ITM001',
+    fieldName: 'prdtType'
+  },
+  {
     title: '제품카테고리',
     componentType: 'lookUp',
     bindType: 'CommonCode',
@@ -28,23 +35,47 @@ const data = [
     fieldName: 'prdtGroup'
   },
   {
-    title: '날짜 Between',
-    componentType: 'dateBetween',
-    bindType: 'none',
-    bindTypePCode: '',
-    fieldName: 'startDate',
-    defaultValue : new Date(),
-    fieldName2: 'endDate',
-    defaultValue2 : new Date()
+    title: '재질',
+    componentType: 'lookUp',
+    bindType: 'CommonCode',
+    bindTypePCode: 'ITA001',
+    fieldName: 'attMatType'
   },
   {
-    title: '날짜 DateField',
-    componentType: 'dateField',
-    bindType: 'none',
-    bindTypePCode: '',
-    fieldName: 'dateFieldTest',
-    defaultValue : new Date()
-  }
+    title: '규격',
+    componentType: 'lookUp',
+    bindType: 'CommonCode',
+    bindTypePCode: 'ITA002',
+    fieldName: 'attStdType'
+  },
+  {
+    title: '소재경',
+    componentType: 'lookUp',
+    bindType: 'CommonCode',
+    bindTypePCode: 'ITA003',
+    fieldName: 'attDiaType'
+  },
+  {
+    title: '열처리사양',
+    componentType: 'lookUp',
+    bindType: 'CommonCode',
+    bindTypePCode: 'SPF001',
+    fieldName: 'heatSpec'
+  },
+  {
+    title: '표면처리사양',
+    componentType: 'lookUp',
+    bindType: 'CommonCode',
+    bindTypePCode: 'SPF002',
+    fieldName: 'surfaceSpec'
+  },
+  // {
+  //   title: '코팅사양',
+  //   componentType: 'lookUp',
+  //   bindType: 'CommonCode',
+  //   bindTypePCode: 'SPF003',
+  //   fieldName: 'coatingSpec'
+  // },
 ];
 
 export default {
