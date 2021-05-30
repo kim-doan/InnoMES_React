@@ -1,4 +1,4 @@
-import { Card } from "@material-ui/core";
+import { Card, TablePagination } from "@material-ui/core";
 import { DataGrid, NumberBox } from "devextreme-react";
 import {
   Column,
@@ -11,7 +11,7 @@ import {
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { ConvertToLookUp } from "../../../../common/Grid/lookUpUtils";
-import { purchaseOrderSelector } from "../slice";
+import { purchaseOrderAction, purchaseOrderSelector } from "../slice";
 
 const PurchaseOrderGrid = () => {
   const dispatch = useDispatch();
@@ -31,7 +31,7 @@ const PurchaseOrderGrid = () => {
   return (
     <div style={{ padding: 20, paddingTop: 5 }}>
       <Card>
-        <DataGrid dataSource={purchaseOrderList} columnAutoWidth={true} height={550}>
+        <DataGrid dataSource={purchaseOrderList} columnAutoWidth={true} height={450}>
           <Column
             caption="발주번호"
             dataField="poNo"
@@ -164,6 +164,35 @@ const PurchaseOrderGrid = () => {
             hidingPriority={0}
           ></Column>
         </DataGrid>
+        <TablePagination
+          component="div"
+          count={totalCount}
+          page={defaultParam.pageable.page}
+          rowsPerPage={defaultParam.pageable.size}
+          backIconButtonText={'이전페이지'}
+          labelRowsPerPage={'페이지 당 행: '}
+          nextIconButtonText={'다음페이지'}
+          labelDisplayedRows={({ from, to, count }) => from + ' - ' + to + ' / ' + count}
+          onChangePage={(event, newPage) => {
+            dispatch(
+              purchaseOrderAction.setDefaultParam({
+                ...defaultParam,
+                pageable: { page: newPage, size: defaultParam.pageable.size }
+              })
+            )
+          }}
+          onChangeRowsPerPage={(event) => {
+            dispatch(
+              purchaseOrderAction.setDefaultParam({
+                ...defaultParam,
+                pageable: {
+                  page: defaultParam.pageable.page,
+                  size: parseInt(event.target.value)
+                }
+              })
+            )
+          }}
+        />
       </Card>
     </div>
   );
