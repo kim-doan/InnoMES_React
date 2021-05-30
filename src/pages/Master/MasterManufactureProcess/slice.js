@@ -10,6 +10,7 @@ export const initialState = {
     manufactureList: [],
     routeList: [],
     bomList: [],
+    focusRow: {},
     defaultParam: {
         pageable: { size: 10, page: 0 }
     },
@@ -37,6 +38,9 @@ const reducers = {
     },
     setBomList: (state, payload) => {
         state.bomList = payload.payload;
+    },
+    setFocusRow: (state, payload) => {
+        state.focusRow = payload.payload;
     }
 }
 
@@ -73,6 +77,10 @@ const selectManufactureListState = createSelector(
     (manufactureList) => manufactureList
 )
 
+const selectFocusRowState = createSelector(
+    (state) => state.focusRow,
+    (focusRow) => focusRow
+)
 
 const selectDefaultParamState = createSelector(
     (state) => state.defaultParam,
@@ -102,9 +110,10 @@ const selectAllState = createSelector(
     selectManufactureListState,
     selectRouteListState,
     selectBomListState,
+    selectFocusRowState,
     selectDefaultParamState,
     selectTotalCountState,
-    (isLoading, error, success, msg, manufactureList, routeList, bomList, defaultParam, totalCount) => {
+    (isLoading, error, success, msg, manufactureList, routeList, bomList, focusRow, defaultParam, totalCount) => {
         return {
             isLoading,
             error,
@@ -113,6 +122,7 @@ const selectAllState = createSelector(
             manufactureList,
             routeList,
             bomList,
+            focusRow,
             defaultParam,
             totalCount
         }
@@ -127,6 +137,7 @@ export const masterManufactureSelector = {
     manufactureList: (state) => selectManufactureListState(state[MASTER_MANUFACTURE_PROCESS]),
     routeList: (state) => selectRouteListState(state[MASTER_MANUFACTURE_PROCESS]),
     bomList: (state) => selectBomListState(state[MASTER_MANUFACTURE_PROCESS]),
+    focusRow: (state) => selectFocusRowState(state[MASTER_MANUFACTURE_PROCESS]),
     defaultParam: (state) => selectDefaultParamState(state[MASTER_MANUFACTURE_PROCESS]),
     totalCount: (state) => selectTotalCountState(state[MASTER_MANUFACTURE_PROCESS]),
     all: (state) => selectAllState(state[MASTER_MANUFACTURE_PROCESS])

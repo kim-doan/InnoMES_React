@@ -23,6 +23,7 @@ const ItemGrid = () => {
     const onFocusedRowChanged = (e) => {
         if(e.rowIndex > -1) {
             dispatch(masterManufactureAction.setRouteList(e.row.data.routeList))
+            dispatch(masterManufactureAction.setFocusRow(e.row.data))
         }
     }
 

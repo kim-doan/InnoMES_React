@@ -34,26 +34,6 @@ const SearchPanel = (props) => {
     setSearchParam(defaultObj)
   }, []);
 
-  useEffect(() => {
-    console.log(searchParam);
-  }, [searchParam]);
-
-  // useEffect(() => {
-  //   props.list.forEach((el) => {
-  //     el.defaultValue !== undefined &&
-  //       setSearchParam({
-  //         ...searchParam,
-  //         [el.fieldName]: el.defaultValue,
-  //       });
-  //     el.defaultValue2 !== undefined &&
-  //       setSearchParam({
-  //         ...searchParam,
-  //         [el.fieldName]: el.defaultValue,
-  //         [el.fieldName2]: el.defaultValue2,
-  //       });
-  //   });
-  // }, [props.list]);
-
   const selectBoxDisplay = (item) => {
     return item && item.codeKR;
   };
