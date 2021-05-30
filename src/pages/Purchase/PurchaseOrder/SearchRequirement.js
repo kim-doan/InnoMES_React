@@ -1,3 +1,5 @@
+import moment from 'moment';
+
 const data = [
   {
     title: '발주일자',
@@ -5,9 +7,9 @@ const data = [
     bindType: 'none',
     bindTypePCode: '',
     fieldName: 'orderStartDate',
-    defaultValue : new Date(),
+    defaultValue : moment().format(),
     fieldName2: 'orderEndDate',
-    defaultValue2 : new Date()
+    defaultValue2 : moment().format()
   },
   {
     title: '납기일자',
@@ -15,9 +17,9 @@ const data = [
     bindType: 'none',
     bindTypePCode: '',
     fieldName: 'dueStartDate',
-    defaultValue : new Date(),
+    defaultValue : moment().format(),
     fieldName2: 'dueEndDate',
-    defaultValue2 : new Date()
+    defaultValue2 : moment().format()
   },
   {
     title: "발주번호",
