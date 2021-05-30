@@ -31,7 +31,7 @@ const PurchaseOrderGrid = () => {
   return (
     <div style={{ padding: 20, paddingTop: 5 }}>
       <Card>
-        <DataGrid dataSource={purchaseOrderList} columnAutoWidth={true} >
+        <DataGrid dataSource={purchaseOrderList} columnAutoWidth={true} height={550}>
           <Column
             caption="발주번호"
             dataField="poNo"

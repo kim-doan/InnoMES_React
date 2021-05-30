@@ -1,4 +1,5 @@
-import { TabPanel } from "devextreme-react";
+import { ResponsiveBox, TabPanel } from "devextreme-react";
+import { Col, Item, Location, Row } from "devextreme-react/responsive-box";
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import ControlBox from "../../../components/ControlBox/ControlBox";
@@ -38,6 +39,10 @@ const PurchaseOrder = () => {
         break;
     }
   };
+  
+  const mainRev = () => {
+
+  }
 
   return (
     <div>
@@ -47,7 +52,20 @@ const PurchaseOrder = () => {
         onSelectedIndexChange={onSelectedIndexChange}
       />
       <SearchPanel mainSearch={mainSearch} list={SearchRequirement.getData()} />
-      <PurchaseOrderGrid />
+      <ControlBox mainRev={mainRev}></ControlBox>
+
+      <ResponsiveBox>
+        <Row></Row>
+        <Col></Col>
+        <Item>
+          <Location
+            row={0}
+            col={0}
+          ></Location>
+          <PurchaseOrderGrid />
+        </Item>
+
+      </ResponsiveBox>
     </div>
   );
 };
