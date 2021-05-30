@@ -1,15 +1,5 @@
 const data = [
   {
-    title: '발주일자',
-    componentType: 'dateBetween',
-    bindType: 'none',
-    bindTypePCode: '',
-    fieldName: 'orderStartDate',
-    defaultValue : new Date(),
-    fieldName2: 'orderEndDate',
-    defaultValue2 : new Date()
-  },
-  {
     title: '납기일자',
     componentType: 'dateBetween',
     bindType: 'none',
@@ -17,6 +7,16 @@ const data = [
     fieldName: 'dueStartDate',
     defaultValue : new Date(),
     fieldName2: 'dueEndDate',
+    defaultValue2 : new Date()
+  },
+  {
+    title: '발주일자',
+    componentType: 'dateBetween',
+    bindType: 'none',
+    bindTypePCode: '',
+    fieldName: 'orderStartDate',
+    defaultValue : new Date(),
+    fieldName2: 'orderEndDate',
     defaultValue2 : new Date()
   },
   {

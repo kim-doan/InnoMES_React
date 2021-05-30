@@ -2,6 +2,7 @@ import { Card } from "@material-ui/core";
 import { DataGrid, NumberBox } from "devextreme-react";
 import {
   Column,
+  Editing,
   Grouping,
   GroupPanel,
   Lookup,
@@ -23,10 +24,14 @@ const PurchaseOrderGrid = () => {
     totalCount,
   } = useSelector(purchaseOrderSelector.all);
 
+  const add = () => {
+    //등록 & 수정 다이얼로그
+  }
+
   return (
     <div style={{ padding: 20, paddingTop: 5 }}>
       <Card>
-        <DataGrid dataSource={purchaseOrderList}>
+        <DataGrid dataSource={purchaseOrderList} columnAutoWidth={true} >
           <Column
             caption="발주번호"
             dataField="poNo"
