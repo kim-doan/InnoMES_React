@@ -1,25 +1,23 @@
-import moment from 'moment';
-
 const data = [
-  {
-    title: '발주일자',
-    componentType: 'dateBetween',
-    bindType: 'none',
-    bindTypePCode: '',
-    fieldName: 'orderStartDate',
-    defaultValue : moment().format(),
-    fieldName2: 'orderEndDate',
-    defaultValue2 : moment().format()
-  },
   {
     title: '납기일자',
     componentType: 'dateBetween',
     bindType: 'none',
     bindTypePCode: '',
     fieldName: 'dueStartDate',
-    defaultValue : moment().format(),
+    defaultValue : new Date(),
     fieldName2: 'dueEndDate',
-    defaultValue2 : moment().format()
+    defaultValue2 : new Date()
+  },
+  {
+    title: '발주일자',
+    componentType: 'dateBetween',
+    bindType: 'none',
+    bindTypePCode: '',
+    fieldName: 'orderStartDate',
+    defaultValue : new Date(),
+    fieldName2: 'orderEndDate',
+    defaultValue2 : new Date()
   },
   {
     title: "발주번호",
