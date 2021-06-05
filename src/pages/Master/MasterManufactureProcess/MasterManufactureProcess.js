@@ -58,8 +58,8 @@ const MasterManufactureProcess = () => {
                 container=".dx-viewport"
                 closeOnOutsideClick={true}
                 title={dlgTitle}
-                width={1200}
-                height={600}
+                width={1600}
+                height={800}
             >
                 <ManufactureProcessRevDialog></ManufactureProcessRevDialog>
             </Popup>

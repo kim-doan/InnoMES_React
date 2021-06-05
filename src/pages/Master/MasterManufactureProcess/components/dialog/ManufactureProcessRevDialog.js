@@ -6,7 +6,8 @@ import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux"
 import { ConvertToLookUp } from "../../../../../common/Grid/lookUpUtils";
 import { masterManufactureSelector } from "../../slice";
-
+import BomGrid from "./components/BomGrid"
+import RouteGrid from "./components/RouteGrid"
 const ManufactureProcessRevDialog = () => {
 
     const { focusRow } = useSelector(masterManufactureSelector.all);
@@ -43,6 +44,7 @@ const ManufactureProcessRevDialog = () => {
                         col={0}
                     ></Location>
                     <Card>
+                        <div style={{ padding: 20, paddingTop: 5}}>
                         <Form
                             id="detail-info"
                             readOnly={true}
@@ -186,6 +188,7 @@ const ManufactureProcessRevDialog = () => {
                                 <Label text={"표면처리사양"}></Label>
                             </SimpleItem>
                         </Form>
+                        </div>
                     </Card>
                 </Item>
                 <Item>
@@ -202,18 +205,14 @@ const ManufactureProcessRevDialog = () => {
                                 row={0}
                                 col={0}
                             ></Location>
-                            <Card>
-                                bb
-                            </Card>
+                                <RouteGrid></RouteGrid>
                         </Item>
                         <Item>
                             <Location
                                 row={0}
                                 col={1}
                             ></Location>
-                            <Card>
-                                cc
-                            </Card>
+                                <BomGrid></BomGrid>
                         </Item>
                     </ResponsiveBox>
                 </Item>
