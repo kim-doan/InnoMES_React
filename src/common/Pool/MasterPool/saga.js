@@ -6,6 +6,7 @@ import {
   getMaterialPool,
   getToolPool,
   getPartPool,
+  getProcessPool,
 } from "../../../api/pool";
 
 export function* itemPoolLoad() {
@@ -86,8 +87,24 @@ export function* partPoolLoad() {
   }
 }
 
+export function* processPoolLoad() {
+  const { processLoadSuccess, processLoadFail } = masterPoolAction;
+
+  try {
+    const result = yield call(getProcessPool);
+
+    yield put(
+      processLoadSuccess({
+        list: result,
+      })
+    );
+  } catch (err) {
+    yield put(processLoadFail(err));
+  }
+}
+
 export function* watchMasterPool() {
-  const { itemLoad, productLoad, materialLoad, toolLoad, partLoad } =
+  const { itemLoad, productLoad, materialLoad, toolLoad, partLoad, processLoad } =
     masterPoolAction;
 
   yield takeLatest(itemLoad, itemPoolLoad);
@@ -95,4 +112,5 @@ export function* watchMasterPool() {
   yield takeLatest(materialLoad, materialPoolLoad);
   yield takeLatest(toolLoad, toolPoolLoad);
   yield takeLatest(partLoad, partPoolLoad);
+  yield takeLatest(processLoad, processPoolLoad);
 }

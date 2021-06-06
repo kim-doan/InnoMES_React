@@ -10,10 +10,6 @@ const BomGrid = () => {
     const dispatch = useDispatch();
     const { bomList } = useSelector(masterManufactureSelector.all);
 
-    useEffect(() => {
-        console.log(bomList)
-    }, [bomList])
-
     return (
         <div style={{ padding: 20, paddingTop: 5}}>
             <Card>

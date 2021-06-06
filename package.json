@@ -11,6 +11,7 @@
     "axios": "^0.21.1",
     "date-fns": "^2.21.1",
     "devextreme": "^20.2.4",
+    "devextreme-aspnet-data-nojquery": "^2.8.5",
     "devextreme-react": "20.2.3",
     "exceljs": "^4.2.1",
     "file-saver": "^2.0.5",

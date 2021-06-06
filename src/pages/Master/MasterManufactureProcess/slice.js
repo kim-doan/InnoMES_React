@@ -1,4 +1,5 @@
 import { createSelector, createSlice } from '@reduxjs/toolkit'
+import { Paging } from 'devextreme-react/data-grid'
 import * as _ from 'lodash'
 import { Component, createElement } from 'react'
 
@@ -7,6 +8,7 @@ export const initialState = {
     error: null,
     success : undefined,
     msg: null,
+    routeSelectRowKey: 0,
     manufactureList: [],
     routeList: [],
     bomList: [],
@@ -41,6 +43,60 @@ const reducers = {
     },
     setFocusRow: (state, payload) => {
         state.focusRow = payload.payload;
+    },
+    setRouteSelectRowKey: (state, payload) => {
+        state.routeSelectRowKey = payload.payload;
+    },
+    setDlgRouteList: (state, payload) => {
+        payload.payload.forEach((value) => {
+            var procSeq = value.key
+            var data = value.data
+            var type = value.type
+
+            var editRow = _.find(state.focusRow.routeList, { procSeq: procSeq })
+
+            switch (type) {
+                case "insert":
+                    state.focusRow.routeList.push(data);
+                    break;
+                case "update":
+                    for(var key in data) {
+                        if(editRow[key] != data[key]) {
+                            editRow[key] = data[key]
+                        }
+                    }
+                    break;
+            }
+        })
+    },
+    setDlgBomList: (state, payload) => {
+        var bomList = _.cloneDeep(payload.payload.component.getDataSource()._items);
+        var changes = payload.payload.changes;
+
+        if(bomList.length > 0) {
+            changes.forEach((value) => {
+                var bomSeq = value.key
+                var data = value.data
+                var type = value.type
+
+                var editRow = _.find(bomList, { bomSeq : bomSeq });
+
+                switch(type) {
+                    case "insert":
+                        bomList.push(data);
+                        break;
+                    case "update":
+                        for(var key in data) {
+                            if(editRow[key] != data[key]) {
+                                editRow[key] = data[key]
+                            }
+                        }
+                        break;
+                }
+            })
+
+            state.focusRow.routeList[state.routeSelectRowKey].bomList = bomList;
+        }
     }
 }
 
@@ -82,6 +138,11 @@ const selectFocusRowState = createSelector(
     (focusRow) => focusRow
 )
 
+const selectRouteSelectRowKey = createSelector(
+    (state) => state.routeSelectRowKey,
+    (routeSelectRowKey) => routeSelectRowKey
+)
+
 const selectDefaultParamState = createSelector(
     (state) => state.defaultParam,
     (defaultParam) => defaultParam
@@ -107,18 +168,20 @@ const selectAllState = createSelector(
     selectErrorState,
     selectSuccessState,
     selectMsgState,
+    selectRouteSelectRowKey,
     selectManufactureListState,
     selectRouteListState,
     selectBomListState,
     selectFocusRowState,
     selectDefaultParamState,
     selectTotalCountState,
-    (isLoading, error, success, msg, manufactureList, routeList, bomList, focusRow, defaultParam, totalCount) => {
+    (isLoading, error, success, msg, routeSelectRowKey, manufactureList, routeList, bomList, focusRow, defaultParam, totalCount) => {
         return {
             isLoading,
             error,
             success,
             msg,
+            routeSelectRowKey,
             manufactureList,
             routeList,
             bomList,
@@ -134,6 +197,7 @@ export const masterManufactureSelector = {
     error: (state) => selectErrorState(state[MASTER_MANUFACTURE_PROCESS]),
     success: (state) => selectSuccessState(state[MASTER_MANUFACTURE_PROCESS]),
     msg: (state) => selectMsgState(state[MASTER_MANUFACTURE_PROCESS]),
+    routeSelectRowKey: (state) => selectRouteSelectRowKey(state[MASTER_MANUFACTURE_PROCESS]),
     manufactureList: (state) => selectManufactureListState(state[MASTER_MANUFACTURE_PROCESS]),
     routeList: (state) => selectRouteListState(state[MASTER_MANUFACTURE_PROCESS]),
     bomList: (state) => selectBomListState(state[MASTER_MANUFACTURE_PROCESS]),

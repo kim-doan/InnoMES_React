@@ -1,24 +1,33 @@
 import { useEffect, useState } from "react";
 import { Card } from "@material-ui/core";
 import { DataGrid } from "devextreme-react";
-import { Column, Lookup } from "devextreme-react/data-grid";
+import { Column, Editing, Lookup } from "devextreme-react/data-grid";
 import { useDispatch, useSelector } from "react-redux"
 import { ConvertToLookUp } from "../../../../../../common/Grid/lookUpUtils";
 import { masterManufactureAction, masterManufactureSelector } from "../../../slice";
-
+import SearchLookUp from "../../../../../../common/SearchLookUp/SearchLookUp";
+import * as _ from 'lodash'
+import { GetProcessNode } from "../../../../../../common/Pool/MasterPool/MasterPool";
+import { ConstantLine } from "devextreme-react/chart";
 
 const RouteGrid = () => {
     const dispatch = useDispatch();
-    const { routeList } = useSelector(masterManufactureSelector.all);
+    const { focusRow } = useSelector(masterManufactureSelector.all);
     const [selectedRowKeys, setSelectedRowKeys] = useState(0);
 
     useEffect(() => {
-        if(routeList.length <= 0) {
+        console.log(focusRow)
+    }, [focusRow])
+
+    useEffect(() => {
+        if(focusRow.routeList !== undefined) {
+        if(focusRow.routeList.length <= 0) {
             dispatch(masterManufactureAction.setBomList([]))
         } else {
-            dispatch(masterManufactureAction.setBomList(routeList[0].bomList))
+            dispatch(masterManufactureAction.setBomList(focusRow.routeList[0].bomList))
         }
-    }, [routeList])
+    }
+    }, [focusRow.routeList])
 
     const onFocusedRowChanged = (e) => {
         if(e.rowIndex > -1) {
@@ -28,8 +37,19 @@ const RouteGrid = () => {
 
     const onOptionChanged = (e) => {
         if(e.fullName == 'focusedRowIndex') {
-            if(e.value > -1)
+            if(e.value > -1) {
                 setSelectedRowKeys(e.value);
+                dispatch(masterManufactureAction.setRouteSelectRowKey(e.value));
+            }
+        }
+    }
+
+    const onSaving = (event) => {
+        event.cancel = true
+        console.log(event)
+        if(event.changes.length) {
+            dispatch(masterManufactureAction.setDlgRouteList(event.changes));
+            event.component.cancelEditData();
         }
     }
 
@@ -37,12 +57,13 @@ const RouteGrid = () => {
         <div style={{ marginTop: 20, marginRight: 10 }}>
             <Card>
                 <DataGrid
-                    dataSource={routeList}
+                    dataSource={focusRow.routeList}
                     keyExpr="procSeq"
                     focusedRowIndex={selectedRowKeys}
                     focusedRowEnabled={true}
                     onOptionChanged={onOptionChanged}
                     onFocusedRowChanged={onFocusedRowChanged}
+                    onSaving={onSaving}
                     columnAutoWidth={true}
                     rowAlternationEnabled={true}
                     showColumnLines={true}
@@ -52,9 +73,16 @@ const RouteGrid = () => {
                     }}
                     height={450}
                 >
+                    <Editing mode="batch" allowUpdating={true} allowAdding={true} allowDeleting={true} />
                     <Column dataField="procSeq" width={60} caption="순번"></Column>
-                    <Column dataField="procCode" caption="공정"></Column>
-                    <Column dataField="passYN" caption="패스공정여부"></Column>
+                    <Column dataField="procCode" width={200} caption="공정" editCellType="Process" editCellComponent={SearchLookUp}>
+                        <Lookup
+                            dataSource={GetProcessNode()}
+                            displayExpr="procName"
+                            valueExpr="procCode"
+                        />
+                    </Column>
+                    <Column dataField="passYN" caption="패스공정여부" dataType="boolean"></Column>
                     <Column dataField="outQnt" caption="산출장입량"></Column>
                     <Column dataField="qntUnit" caption="장입단위">
                         <Lookup
@@ -67,13 +95,6 @@ const RouteGrid = () => {
                     <Column dataField="settingTime" caption="기본세팅시간"></Column>
                     <Column dataField="unitWeight" caption="단중"></Column>
                     <Column dataField="locCode" caption="적재위치"></Column>
-                    {/* <Column dataField="inOutType" caption="내외작">
-                        <Lookup
-                            dataSource={ConvertToLookUp("CommonCode", "TPS019")}
-                            displayExpr="codeKR"
-                            valueExpr="code"
-                        ></Lookup>
-                    </Column> */}
                 </DataGrid>
             </Card>
         </div>

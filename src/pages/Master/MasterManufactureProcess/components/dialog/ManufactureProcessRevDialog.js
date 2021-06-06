@@ -11,10 +11,6 @@ import RouteGrid from "./components/RouteGrid"
 const ManufactureProcessRevDialog = () => {
 
     const { focusRow } = useSelector(masterManufactureSelector.all);
-    
-    useEffect(() => {
-        console.log(focusRow)
-    }, [focusRow])
 
     const colCountByScreen = {
         sm: 2,

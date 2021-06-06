@@ -140,8 +140,8 @@ const selectPartPoolState = createSelector(
 )
 
 const selectProcessPoolState = createSelector(
-    (state) => state.procPool,
-    (procPool) => procPool
+    (state) => state.processPool,
+    (processPool) => processPool
 )
 
 const selectUserPoolState = createSelector(

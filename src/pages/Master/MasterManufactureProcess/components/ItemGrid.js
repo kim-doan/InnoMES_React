@@ -16,10 +16,6 @@ const ItemGrid = () => {
         dispatch(masterManufactureAction.load());
     }, [defaultParam])
 
-    useEffect(() => {
-        console.log(manufactureList)
-    }, [manufactureList])
-
     const onFocusedRowChanged = (e) => {
         if(e.rowIndex > -1) {
             dispatch(masterManufactureAction.setRouteList(e.row.data.routeList))
