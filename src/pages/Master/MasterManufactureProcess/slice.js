@@ -57,6 +57,7 @@ const reducers = {
 
             switch (type) {
                 case "insert":
+                    data["procSeq"] = state.focusRow.routeList.length + 1;
                     state.focusRow.routeList.push(data);
                     break;
                 case "update":
@@ -70,33 +71,38 @@ const reducers = {
         })
     },
     setDlgBomList: (state, payload) => {
-        var bomList = _.cloneDeep(payload.payload.component.getDataSource()._items);
+        var bomList = state.focusRow.routeList[state.routeSelectRowKey].bomList;
         var changes = payload.payload.changes;
 
-        if(bomList.length > 0) {
-            changes.forEach((value) => {
-                var bomSeq = value.key
-                var data = value.data
-                var type = value.type
+        changes.forEach((value) => {
+            var bomSeq = value.key
+            var data = value.data
+            var type = value.type
 
-                var editRow = _.find(bomList, { bomSeq : bomSeq });
+            switch(type) {
+                case "insert":
+                    bomList.push(data);
+                    break;
+                case "update":
+                    var editRow = _.find(bomList, { bomSeq : bomSeq });
 
-                switch(type) {
-                    case "insert":
-                        bomList.push(data);
-                        break;
-                    case "update":
-                        for(var key in data) {
-                            if(editRow[key] != data[key]) {
-                                editRow[key] = data[key]
+                    for(var key in data) {
+                        if(editRow[key] != data[key]) {
+                            editRow[key] = data[key]
+                        }
+
+                        //패스공정일 경우 해당 공정 routingSeq 0
+                        if(key == "passYN") {
+                            if(editRow[key] == true) {
+                                editRow["routingSeq"] = 0;
                             }
                         }
-                        break;
-                }
-            })
+                    }
+                    break;
+            }
+        })
 
-            state.focusRow.routeList[state.routeSelectRowKey].bomList = bomList;
-        }
+        state.focusRow.routeList[state.routeSelectRowKey].bomList = bomList;
     }
 }
 

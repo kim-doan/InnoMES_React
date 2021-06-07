@@ -12,28 +12,9 @@ import { ConstantLine } from "devextreme-react/chart";
 
 const RouteGrid = () => {
     const dispatch = useDispatch();
-    const { focusRow } = useSelector(masterManufactureSelector.all);
+    const { focusRow, routeSelectRowKey } = useSelector(masterManufactureSelector.all);
     const [selectedRowKeys, setSelectedRowKeys] = useState(0);
-
-    useEffect(() => {
-        console.log(focusRow)
-    }, [focusRow])
-
-    useEffect(() => {
-        if(focusRow.routeList !== undefined) {
-        if(focusRow.routeList.length <= 0) {
-            dispatch(masterManufactureAction.setBomList([]))
-        } else {
-            dispatch(masterManufactureAction.setBomList(focusRow.routeList[0].bomList))
-        }
-    }
-    }, [focusRow.routeList])
-
-    const onFocusedRowChanged = (e) => {
-        if(e.rowIndex > -1) {
-            dispatch(masterManufactureAction.setBomList(e.row.data.bomList))
-        } 
-    }
+    const [test, setTest] = useState(0);
 
     const onOptionChanged = (e) => {
         if(e.fullName == 'focusedRowIndex') {
@@ -44,9 +25,13 @@ const RouteGrid = () => {
         }
     }
 
+    const onInitNewRow = (event) => {
+        event.component.saveEditData();
+        event.data.bomList = [];
+    }
+
     const onSaving = (event) => {
         event.cancel = true
-        console.log(event)
         if(event.changes.length) {
             dispatch(masterManufactureAction.setDlgRouteList(event.changes));
             event.component.cancelEditData();
@@ -61,8 +46,8 @@ const RouteGrid = () => {
                     keyExpr="procSeq"
                     focusedRowIndex={selectedRowKeys}
                     focusedRowEnabled={true}
+                    onInitNewRow={onInitNewRow}
                     onOptionChanged={onOptionChanged}
-                    onFocusedRowChanged={onFocusedRowChanged}
                     onSaving={onSaving}
                     columnAutoWidth={true}
                     rowAlternationEnabled={true}
@@ -74,7 +59,7 @@ const RouteGrid = () => {
                     height={450}
                 >
                     <Editing mode="batch" allowUpdating={true} allowAdding={true} allowDeleting={true} />
-                    <Column dataField="procSeq" width={60} caption="순번"></Column>
+                    <Column dataField="procSeq" width={60} caption="순번" allowEditing={false}></Column>
                     <Column dataField="procCode" width={200} caption="공정" editCellType="Process" editCellComponent={SearchLookUp}>
                         <Lookup
                             dataSource={GetProcessNode()}

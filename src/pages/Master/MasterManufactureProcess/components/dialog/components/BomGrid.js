@@ -20,6 +20,17 @@ const BomGrid = () => {
         }
     }
 
+    const onInitNewRow = (event) => {
+        event.data.procCode = focusRow.routeList[routeSelectRowKey].procCode;
+        event.data.bomSeq = 1;
+        event.data.inQnt = 0;
+        event.data.inUnit = "UNT001001";
+        event.data.createUser = "1";
+        event.data.updateUser = "1";
+        event.data.used = 1;
+        event.data.swapSeq = 0;
+    }
+
     return (
         <div style={{ marginTop: 20, marginLeft: 10}}>
             <Card>
@@ -28,6 +39,7 @@ const BomGrid = () => {
                     keyExpr="bomSeq"
                     columnAutoWidth={true}
                     rowAlternationEnabled={true}
+                    onInitNewRow={onInitNewRow}
                     showColumnLines={true}
                     onSaving={onSaving}
                     loadPanel={{
