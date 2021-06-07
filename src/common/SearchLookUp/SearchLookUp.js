@@ -30,7 +30,7 @@ export default class SearchLookUp extends React.Component {
           dataSource={this.props.data.column.lookup.dataSource}
           remoteOperations={true}
           keyExpr="itemId"
-          height={300}
+          height={250}
           selectedRowKeys={[this.state.currentValue]}
           hoverStateEnabled={true}
           onSelectionChanged={this.onSelectionChanged}
@@ -54,7 +54,7 @@ export default class SearchLookUp extends React.Component {
         dataSource={this.props.data.column.lookup.dataSource}
         remoteOperations={true}
         keyExpr="procCode"
-        height={300}
+        height={250}
         selectedRowKeys={[this.state.currentValue]}
         hoverStateEnabled={true}
         onSelectionChanged={this.onSelectionChanged}
@@ -78,7 +78,7 @@ export default class SearchLookUp extends React.Component {
           dataSource={this.props.data.column.lookup.dataSource}
           remoteOperations={true}
           keyExpr="itemId"
-          height={300}
+          height={250}
           selectedRowKeys={[this.state.currentValue]}
           hoverStateEnabled={true}
           onSelectionChanged={this.onSelectionChanged}
