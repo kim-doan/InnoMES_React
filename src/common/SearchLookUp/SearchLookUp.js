@@ -30,7 +30,7 @@ export default class SearchLookUp extends React.Component {
           dataSource={this.props.data.column.lookup.dataSource}
           remoteOperations={true}
           keyExpr="itemId"
-          height={250}
+          height={300}
           selectedRowKeys={[this.state.currentValue]}
           hoverStateEnabled={true}
           onSelectionChanged={this.onSelectionChanged}
@@ -54,7 +54,7 @@ export default class SearchLookUp extends React.Component {
         dataSource={this.props.data.column.lookup.dataSource}
         remoteOperations={true}
         keyExpr="procCode"
-        height={250}
+        height={300}
         selectedRowKeys={[this.state.currentValue]}
         hoverStateEnabled={true}
         onSelectionChanged={this.onSelectionChanged}
@@ -78,7 +78,7 @@ export default class SearchLookUp extends React.Component {
           dataSource={this.props.data.column.lookup.dataSource}
           remoteOperations={true}
           keyExpr="itemId"
-          height={250}
+          height={300}
           selectedRowKeys={[this.state.currentValue]}
           hoverStateEnabled={true}
           onSelectionChanged={this.onSelectionChanged}
@@ -124,8 +124,8 @@ export default class SearchLookUp extends React.Component {
         dropDownOptions={dropDownOptions}
         dataSource={this.props.data.column.lookup.dataSource}
         value={this.state.currentValue}
-        displayExpr="procName"
-        valueExpr="procCode"
+        displayExpr={this.props.data.column.lookup.displayExpr}
+        valueExpr={this.props.data.column.lookup.valueExpr}
         contentRender={this.renderHandler()}
       ></DropDownBox>
     );
