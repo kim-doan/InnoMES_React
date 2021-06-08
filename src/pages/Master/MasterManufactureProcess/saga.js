@@ -27,6 +27,7 @@ export function* revisionManufactureProcess() {
 
     try {
         const param = yield select(masterManufactureSelector.focusRow)
+        
         const result = yield call(setManufactureProcessRev, param)
 
         if (result.success) {

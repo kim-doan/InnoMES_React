@@ -2,6 +2,7 @@ import { Card } from "@material-ui/core";
 import { Button, Form, ResponsiveBox, SelectBox, TextBox } from "devextreme-react";
 import { Label, SimpleItem } from "devextreme-react/form";
 import { Col, Item, Location, Row } from "devextreme-react/responsive-box";
+import _ from "lodash";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux"
 import { ConvertToLookUp } from "../../../../../common/Grid/lookUpUtils";
@@ -30,6 +31,18 @@ const ManufactureProcessRevDialog = () => {
 
     const selectBoxDisplay = (item) => {
         return item && item.codeKR;
+    };
+
+    const selectUserBoxDisplay = (item) => {
+        return item && item.userName;
+    }
+
+    const changeItem = (item, fieldName) => {
+        var _focusRow = _.cloneDeep(focusRow);
+
+        _focusRow[fieldName] = item.value;
+
+        dispatch(masterManufactureAction.setFocusRow(_focusRow));
     };
 
     return (
@@ -197,10 +210,27 @@ const ManufactureProcessRevDialog = () => {
                                     displayExpr={selectBoxDisplay}
                                     valueExpr="code"
                                     searchEnabled={true}
-                                    // value={focusRow.prdtStatus}
-                                    placeholder={"검색어를 입력하십시오."}
+                                    value={focusRow.prdtStatus}
+                                    placeholder={"제품상태"}
+                                    onValueChanged={(e) => changeItem(e, "prdtStatus")}
                                 ></SelectBox>
-                                <Label text={"제품상태"}></Label>
+                                <Label text={"*제품상태"}></Label>
+                            </SimpleItem>
+                            <SimpleItem>
+                                <SelectBox
+                                    showTitle={true}
+                                    dataSource={ConvertToLookUp(
+                                        "User",
+                                        ""
+                                    )}
+                                    displayExpr={selectUserBoxDisplay}
+                                    valueExpr="userNo"
+                                    searchEnabled={true}
+                                    value={focusRow.revUser}
+                                    placeholder={"개정자"}
+                                    onValueChanged={(e) => changeItem(e, "revUser")}
+                                ></SelectBox>
+                                <Label text={"*개정자"}></Label>
                             </SimpleItem>
                         </Form>
                         </div>

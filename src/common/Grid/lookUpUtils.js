@@ -5,7 +5,12 @@ export const ConvertToLookUp = (bindType, bindTypePCode) => {
     /* 코드 정보 */
     case 'CommonCode':
       const codePool = JSON.parse(localStorage.getItem('CodePool'))
-      return _.sortBy(codePool[bindTypePCode], 'code')
+
+      var filter = _.filter(codePool[bindTypePCode], (n) => {
+          return n.codeLevel >= 2;
+      })
+
+      return _.sortBy(filter, 'code')
     /* 품목 정보 */
     case 'Item':
       const itemPool = JSON.parse(localStorage.getItem('ItemPool'))

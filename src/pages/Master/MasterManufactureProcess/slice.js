@@ -35,6 +35,9 @@ const reducers = {
     revision: (state, payload) => {
         state.isLoading = true
         state.success = undefined
+        state.focusRow.createUser = "1"
+        state.focusRow.updateUser = "1"
+        state.focusRow.used = 1
     },
     revisionSuccess: (state, {payload: { success, msg }}) => {
         state.isLoading = false

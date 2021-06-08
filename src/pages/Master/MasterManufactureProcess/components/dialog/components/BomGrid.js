@@ -14,6 +14,7 @@ const BomGrid = () => {
 
     const onSaving = (event) => {
         event.cancel = true
+        console.log(event.changes)
         if(event.changes.length) {
             dispatch(masterManufactureAction.setDlgBomList(event));
             event.component.cancelEditData();
@@ -22,6 +23,7 @@ const BomGrid = () => {
 
     const onInitNewRow = (event) => {
         event.data.procCode = focusRow.routeList[routeSelectRowKey].procCode;
+        event.data.prdtId = focusRow.prdtId;
         event.data.bomSeq = 1;
         event.data.inQnt = 0;
         event.data.inUnit = "UNT001001";
@@ -35,7 +37,7 @@ const BomGrid = () => {
         <div style={{ marginTop: 20, marginLeft: 10}}>
             <Card>
                 <DataGrid
-                    dataSource={focusRow.routeList !== undefined && focusRow.routeList[routeSelectRowKey].bomList}
+                    dataSource={focusRow.routeList !== undefined && focusRow.routeList[routeSelectRowKey] !== undefined && focusRow.routeList[routeSelectRowKey].bomList}
                     keyExpr="bomSeq"
                     columnAutoWidth={true}
                     rowAlternationEnabled={true}
