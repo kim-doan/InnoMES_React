@@ -265,14 +265,17 @@ const ManufactureProcessRevDialog = () => {
                                 row={1}
                                 col={1}
                             ></Location>
-                            <Button
-                                width={150}
-                                height={40}
-                                text="개정"
-                                type="success"
-                                stylingMode="contained"
-                                onClick={() => dispatch(masterManufactureAction.revision())}
-                            />
+                            <div>
+                                <Button
+                                    width={200}
+                                    height={45}
+                                    text="확인"
+                                    type="success"
+                                    stylingMode="contained"
+                                    style={{float:"right", marginTop: 20}}
+                                    onClick={() => dispatch(masterManufactureAction.revision())}
+                                />
+                            </div>
                         </Item>
                     </ResponsiveBox>
                 </Item>

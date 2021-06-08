@@ -59,7 +59,7 @@ const MasterManufactureProcess = () => {
                 closeOnOutsideClick={true}
                 title={dlgTitle}
                 width={1600}
-                height={800}
+                height={850}
             >
                 <ManufactureProcessRevDialog></ManufactureProcessRevDialog>
             </Popup>

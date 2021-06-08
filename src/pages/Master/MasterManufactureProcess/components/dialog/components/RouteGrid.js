@@ -26,7 +26,6 @@ const RouteGrid = () => {
     // }
 
     const onFocusedRowChanged = (e) => {
-        setSelectedRowKeys(e.row.rowIndex);
         dispatch(masterManufactureAction.setRouteSelectRowKey(e.row.rowIndex));
     }
 
@@ -55,7 +54,7 @@ const RouteGrid = () => {
                 <DataGrid
                     dataSource={focusRow.routeList}
                     keyExpr="procSeq"
-                    focusedRowIndex={selectedRowKeys}
+                    focusedRowIndex={routeSelectRowKey}
                     focusedRowEnabled={true}
                     onInitNewRow={onInitNewRow}
                     // onOptionChanged={onOptionChanged}
