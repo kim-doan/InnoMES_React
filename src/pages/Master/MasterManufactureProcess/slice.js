@@ -22,7 +22,6 @@ export const initialState = {
 const reducers = {
     load: (state, payload) => {
         state.isLoading = true
-        console.log("test")
     },
     loadSuccess: (state, { payload: { list, totalCount }}) => {
         state.isLoading = false
@@ -110,6 +109,7 @@ const reducers = {
 
             switch(type) {
                 case "insert":
+                    data["bomSeq"] = bomList.length + 1;
                     bomList.push(data);
                     break;
                 case "update":

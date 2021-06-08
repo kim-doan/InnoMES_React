@@ -12,25 +12,24 @@ const BomGrid = () => {
     const dispatch = useDispatch();
     const { focusRow, routeSelectRowKey } = useSelector(masterManufactureSelector.all);
 
-    const onSaving = (event) => {
-        event.cancel = true
-        console.log(event.changes)
-        if(event.changes.length) {
-            dispatch(masterManufactureAction.setDlgBomList(event));
-            event.component.cancelEditData();
-        }
-    }
-
     const onInitNewRow = (event) => {
+        event.component.saveEditData();
         event.data.procCode = focusRow.routeList[routeSelectRowKey].procCode;
         event.data.prdtId = focusRow.prdtId;
-        event.data.bomSeq = 1;
         event.data.inQnt = 0;
         event.data.inUnit = "UNT001001";
         event.data.createUser = "1";
         event.data.updateUser = "1";
         event.data.used = 1;
         event.data.swapSeq = 0;
+    }
+
+    const onSaving = (event) => {
+        event.cancel = true
+        if(event.changes.length) {
+            dispatch(masterManufactureAction.setDlgBomList(event));
+            event.component.cancelEditData();
+        }
     }
 
     return (
@@ -51,7 +50,7 @@ const BomGrid = () => {
                     height={450}
                 >
                     <Editing mode="batch" allowUpdating={true} allowAdding={true} allowDeleting={true} />
-                    <Column dataField="bomSeq" width={60} caption="순번"></Column>
+                    <Column dataField="bomSeq" width={60} caption="순번" allowEditing={false}></Column>
                     <Column dataField="itemId" caption="투입소재" editCellType="Bom" editCellComponent={SearchLookUp}>
                         <Lookup
                             dataSource={GetBomNode()}
