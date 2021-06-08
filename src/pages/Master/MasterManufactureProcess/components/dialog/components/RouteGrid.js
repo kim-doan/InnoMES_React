@@ -27,6 +27,12 @@ const RouteGrid = () => {
 
     const onInitNewRow = (event) => {
         event.component.saveEditData();
+        event.data.inQnt = 0;
+        event.data.outQnt = 0;
+        event.data.qntUnit = 'UNT002001';
+        event.data.leadTime = 0;
+        event.data.settingTime = 0;
+        event.data.unitWeight = 0;
         event.data.bomList = [];
     }
 
@@ -68,7 +74,7 @@ const RouteGrid = () => {
                         />
                     </Column>
                     <Column dataField="passYN" caption="패스공정여부" dataType="boolean"></Column>
-                    <Column dataField="outQnt" caption="산출장입량"></Column>
+                    <Column dataField="outQnt" caption="산출장입량" format="#,##0.##"></Column>
                     <Column dataField="qntUnit" caption="장입단위">
                         <Lookup
                             dataSource={ConvertToLookUp("CommonCode", "UNT002")}
@@ -76,9 +82,9 @@ const RouteGrid = () => {
                             valueExpr="code"
                         ></Lookup>
                     </Column>
-                    <Column dataField="leadTime" caption="리드타임"></Column>
-                    <Column dataField="settingTime" caption="기본세팅시간"></Column>
-                    <Column dataField="unitWeight" caption="단중"></Column>
+                    <Column dataField="leadTime" caption="리드타임" format="#,##0.##"></Column>
+                    <Column dataField="settingTime" caption="기본세팅시간" format="#,##0.##"></Column>
+                    <Column dataField="unitWeight" caption="단중" format="#,##0.##"></Column>
                     <Column dataField="locCode" caption="적재위치"></Column>
                 </DataGrid>
             </Card>

@@ -1,16 +1,21 @@
 import { Card } from "@material-ui/core";
-import { Form, ResponsiveBox, SelectBox, TextBox } from "devextreme-react";
+import { Button, Form, ResponsiveBox, SelectBox, TextBox } from "devextreme-react";
 import { Label, SimpleItem } from "devextreme-react/form";
 import { Col, Item, Location, Row } from "devextreme-react/responsive-box";
+import _ from "lodash";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux"
 import { ConvertToLookUp } from "../../../../../common/Grid/lookUpUtils";
-import { masterManufactureSelector } from "../../slice";
+import { masterManufactureAction, masterManufactureSelector } from "../../slice";
 import BomGrid from "./components/BomGrid"
 import RouteGrid from "./components/RouteGrid"
 const ManufactureProcessRevDialog = () => {
-
+    const dispatch = useDispatch();
     const { focusRow } = useSelector(masterManufactureSelector.all);
+
+    useEffect(() => {
+        console.log(focusRow)
+    }, [focusRow])
 
     const colCountByScreen = {
         sm: 2,
@@ -26,6 +31,18 @@ const ManufactureProcessRevDialog = () => {
 
     const selectBoxDisplay = (item) => {
         return item && item.codeKR;
+    };
+
+    const selectUserBoxDisplay = (item) => {
+        return item && item.userName;
+    }
+
+    const changeItem = (item, fieldName) => {
+        var _focusRow = _.cloneDeep(focusRow);
+
+        _focusRow[fieldName] = item.value;
+
+        dispatch(masterManufactureAction.setFocusRow(_focusRow));
     };
 
     return (
@@ -183,6 +200,38 @@ const ManufactureProcessRevDialog = () => {
                                 ></SelectBox>
                                 <Label text={"표면처리사양"}></Label>
                             </SimpleItem>
+                            <SimpleItem>
+                                <SelectBox
+                                    showTitle={true}
+                                    dataSource={ConvertToLookUp(
+                                        "CommonCode",
+                                        "PRS"
+                                    )}
+                                    displayExpr={selectBoxDisplay}
+                                    valueExpr="code"
+                                    searchEnabled={true}
+                                    value={focusRow.prdtStatus}
+                                    placeholder={"제품상태"}
+                                    onValueChanged={(e) => changeItem(e, "prdtStatus")}
+                                ></SelectBox>
+                                <Label text={"*제품상태"}></Label>
+                            </SimpleItem>
+                            <SimpleItem>
+                                <SelectBox
+                                    showTitle={true}
+                                    dataSource={ConvertToLookUp(
+                                        "User",
+                                        ""
+                                    )}
+                                    displayExpr={selectUserBoxDisplay}
+                                    valueExpr="userNo"
+                                    searchEnabled={true}
+                                    value={focusRow.revUser}
+                                    placeholder={"개정자"}
+                                    onValueChanged={(e) => changeItem(e, "revUser")}
+                                ></SelectBox>
+                                <Label text={"*개정자"}></Label>
+                            </SimpleItem>
                         </Form>
                         </div>
                     </Card>
@@ -213,6 +262,14 @@ const ManufactureProcessRevDialog = () => {
                     </ResponsiveBox>
                 </Item>
             </ResponsiveBox>
+            <Button
+                width={150}
+                height={40}
+                text="개정"
+                type="success"
+                stylingMode="contained"
+                onClick={() => dispatch(masterManufactureAction.revision())}
+            />
         </div>
     )
 }

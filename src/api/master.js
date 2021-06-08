@@ -218,14 +218,10 @@ const getManufactureItemList = (param) => {
     .post(address + '/master/manufactureItem?' + pageable.toString(), param.searchParam)
     .then((response) => response.data)
 }
-// BOM 정보 API
-const getBomList = (param) => {
-  return axios.post(address + '/master/bomList', param).then((response) => response.data)
-}
-//제조공정정보 단건가져오기 (라우팅 + BOM)
-//다이얼로그 전용
-const getManufactureProcess = (param) => {
-  return axios.post(address + '/master/manufactureProcess', param).then((response) => response.data)
+
+// 제조공정정보 개정
+const setManufactureProcessRev = (param) => {
+  return axios.post(address + '/master/manufactureProcess/save', param).then((response) => response.data)
 }
 
 export {
@@ -261,6 +257,5 @@ export {
   getMasterFailCodeList,
   setMasterFailCodeList,
   getManufactureItemList,
-  getBomList,
-  getManufactureProcess
+  setManufactureProcessRev
 }

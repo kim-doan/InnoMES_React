@@ -32,6 +32,22 @@ const reducers = {
         state.isLoading = false
         state.error = error
     },
+    revision: (state, payload) => {
+        state.isLoading = true
+        state.success = undefined
+        state.focusRow.createUser = "1"
+        state.focusRow.updateUser = "1"
+        state.focusRow.used = 1
+    },
+    revisionSuccess: (state, {payload: { success, msg }}) => {
+        state.isLoading = false
+        state.success = success;
+        state.msg = msg;
+    },
+    revisionFail: (state, { payload: error }) => {
+        state.isLoading = false
+        state.error = error
+    },
     setDefaultParam: (state, payload) => {
         state.defaultParam = payload.payload;
     },
@@ -68,6 +84,18 @@ const reducers = {
                     }
                     break;
             }
+
+            //패스공정일 경우 해당 공정 routingSeq 0
+            var count = 0;
+            state.focusRow.routeList.forEach((value, index) => {
+                var passYN = value["passYN"];
+
+                if(passYN === true) {
+                    value["routingSeq"] = 0;
+                } else {
+                    value["routingSeq"] = count++;
+                }
+            })
         })
     },
     setDlgBomList: (state, payload) => {
@@ -89,13 +117,6 @@ const reducers = {
                     for(var key in data) {
                         if(editRow[key] != data[key]) {
                             editRow[key] = data[key]
-                        }
-
-                        //패스공정일 경우 해당 공정 routingSeq 0
-                        if(key == "passYN") {
-                            if(editRow[key] == true) {
-                                editRow["routingSeq"] = 0;
-                            }
                         }
                     }
                     break;
