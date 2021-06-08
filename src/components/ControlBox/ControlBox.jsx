@@ -42,6 +42,18 @@ const ControlBox = (props) => {
                     />
                 </div>
             )}
+            {props.mainReg !== undefined && (
+                <div className="button">
+                    <Button
+                        width={100}
+                        height={35}
+                        text="등록"
+                        type="default"
+                        stylingMode="contained"
+                        onClick={props.mainReg}
+                    />
+                </div>
+            )}
         </div>
     )
 }

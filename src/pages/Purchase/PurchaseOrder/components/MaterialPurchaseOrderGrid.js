@@ -13,7 +13,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { ConvertToLookUp } from "../../../../common/Grid/lookUpUtils";
 import { purchaseOrderAction, purchaseOrderSelector } from "../slice";
 
-const PurchaseOrderGrid = () => {
+const MaterialPurchaseOrderGrid = () => {
   const dispatch = useDispatch();
   const {
     isLoading,
@@ -24,14 +24,14 @@ const PurchaseOrderGrid = () => {
     totalCount,
   } = useSelector(purchaseOrderSelector.all);
 
-  const add = () => {
-    //등록 & 수정 다이얼로그
+  const addRow = (e) => {
+    console.log(e);
   }
 
   return (
     <div style={{ padding: 20, paddingTop: 5 }}>
       <Card>
-        <DataGrid dataSource={purchaseOrderList} columnAutoWidth={true} height={450}>
+        <DataGrid dataSource={purchaseOrderList} columnAutoWidth={true} height={450} onInitNewRow={addRow}>
           <Column
             caption="발주번호"
             dataField="poNo"
@@ -198,4 +198,4 @@ const PurchaseOrderGrid = () => {
   );
 };
 
-export default PurchaseOrderGrid;
+export default MaterialPurchaseOrderGrid;
