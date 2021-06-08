@@ -22,6 +22,7 @@ export const initialState = {
 const reducers = {
     load: (state, payload) => {
         state.isLoading = true
+        console.log("test")
     },
     loadSuccess: (state, { payload: { list, totalCount }}) => {
         state.isLoading = false

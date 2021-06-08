@@ -13,16 +13,21 @@ import { ConstantLine } from "devextreme-react/chart";
 const RouteGrid = () => {
     const dispatch = useDispatch();
     const { focusRow, routeSelectRowKey } = useSelector(masterManufactureSelector.all);
-    const [selectedRowKeys, setSelectedRowKeys] = useState(0);
-    const [test, setTest] = useState(0);
 
-    const onOptionChanged = (e) => {
-        if(e.fullName == 'focusedRowIndex') {
-            if(e.value > -1) {
-                setSelectedRowKeys(e.value);
-                dispatch(masterManufactureAction.setRouteSelectRowKey(e.value));
-            }
-        }
+    const [selectedRowKeys, setSelectedRowKeys] = useState(0);
+
+    // const onOptionChanged = (e) => {
+    //     if(e.fullName == 'focusedRowIndex') {
+    //         if(e.value > -1) {
+    //             setSelectedRowKeys(e.value);
+    //             dispatch(masterManufactureAction.setRouteSelectRowKey(e.value));
+    //         }
+    //     }
+    // }
+
+    const onFocusedRowChanged = (e) => {
+        setSelectedRowKeys(e.row.rowIndex);
+        dispatch(masterManufactureAction.setRouteSelectRowKey(e.row.rowIndex));
     }
 
     const onInitNewRow = (event) => {
@@ -53,7 +58,8 @@ const RouteGrid = () => {
                     focusedRowIndex={selectedRowKeys}
                     focusedRowEnabled={true}
                     onInitNewRow={onInitNewRow}
-                    onOptionChanged={onOptionChanged}
+                    // onOptionChanged={onOptionChanged}
+                    onFocusedRowChanged={onFocusedRowChanged}
                     onSaving={onSaving}
                     columnAutoWidth={true}
                     rowAlternationEnabled={true}

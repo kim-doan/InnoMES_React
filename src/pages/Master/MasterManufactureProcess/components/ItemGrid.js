@@ -1,6 +1,7 @@
 import { Card, TablePagination } from "@material-ui/core";
 import { DataGrid } from "devextreme-react";
 import { Column, Editing, Lookup } from "devextreme-react/data-grid";
+import { useRef } from "react";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux"
 import { ConvertToLookUp } from "../../../../common/Grid/lookUpUtils";
@@ -12,8 +13,13 @@ const ItemGrid = () => {
     const { manufactureList, defaultParam, totalCount } = useSelector(masterManufactureSelector.all);
     const [selectedRowKeys, setSelectedRowKeys] = useState(0);
 
+    const mounted = useRef(false);
     useEffect(() => {
-        dispatch(masterManufactureAction.load());
+        if (!mounted.current) {
+            mounted.current = true;
+        } else {
+            dispatch(masterManufactureAction.load());
+        }
     }, [defaultParam])
 
     const onFocusedRowChanged = (e) => {

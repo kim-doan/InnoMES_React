@@ -243,6 +243,7 @@ const ManufactureProcessRevDialog = () => {
                     ></Location>
                     <ResponsiveBox>
                         <Row></Row>
+                        <Row></Row>
                         <Col></Col>
                         <Col></Col>
                         <Item>
@@ -259,17 +260,23 @@ const ManufactureProcessRevDialog = () => {
                             ></Location>
                                 <BomGrid></BomGrid>
                         </Item>
+                        <Item>
+                            <Location
+                                row={1}
+                                col={1}
+                            ></Location>
+                            <Button
+                                width={150}
+                                height={40}
+                                text="개정"
+                                type="success"
+                                stylingMode="contained"
+                                onClick={() => dispatch(masterManufactureAction.revision())}
+                            />
+                        </Item>
                     </ResponsiveBox>
                 </Item>
             </ResponsiveBox>
-            <Button
-                width={150}
-                height={40}
-                text="개정"
-                type="success"
-                stylingMode="contained"
-                onClick={() => dispatch(masterManufactureAction.revision())}
-            />
         </div>
     )
 }
