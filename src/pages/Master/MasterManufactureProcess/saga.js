@@ -22,7 +22,7 @@ export function* manufactureItemListLoad() {
 }
 
 export function* revisionManufactureProcess() {
-    const { revisionSuccess, revisionFail } = masterManufactureAction
+    const { revisionSuccess, revisionFail, setDlgState } = masterManufactureAction
     const { show } = toastAction
 
     try {
@@ -32,6 +32,7 @@ export function* revisionManufactureProcess() {
 
         if (result.success) {
             yield put(show({ type: 'success', message: '제조공정정보를 개정했습니다.'}))
+            yield put(setDlgState(false))
         } else {
             yield put(show({ type: 'error', message: result.msg }))
         }
@@ -44,6 +45,7 @@ export function* revisionManufactureProcess() {
         )
     } catch(err) {
         yield put(revisionFail(err))
+        yield put(show({ type: 'error', displayTime: 3000, message: "제조공정정보 개정에 실패했습니다. 관리자에게 문의하세요." }))
     }
 }
 

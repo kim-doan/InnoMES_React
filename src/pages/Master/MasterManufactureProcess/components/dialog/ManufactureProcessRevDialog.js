@@ -1,8 +1,8 @@
 import { Card } from "@material-ui/core";
 import { Button, Form, ResponsiveBox, SelectBox, TextBox } from "devextreme-react";
-import { Label, SimpleItem } from "devextreme-react/form";
+import { Label, RequiredRule, SimpleItem } from "devextreme-react/form";
 import { Col, Item, Location, Row } from "devextreme-react/responsive-box";
-import _ from "lodash";
+import _, { result } from "lodash";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux"
 import { ConvertToLookUp } from "../../../../../common/Grid/lookUpUtils";
@@ -11,7 +11,7 @@ import BomGrid from "./components/BomGrid"
 import RouteGrid from "./components/RouteGrid"
 const ManufactureProcessRevDialog = () => {
     const dispatch = useDispatch();
-    const { focusRow } = useSelector(masterManufactureSelector.all);
+    const { focusRow, success } = useSelector(masterManufactureSelector.all);
 
     useEffect(() => {
         console.log(focusRow)
@@ -213,7 +213,8 @@ const ManufactureProcessRevDialog = () => {
                                     value={focusRow.prdtStatus}
                                     placeholder={"제품상태"}
                                     onValueChanged={(e) => changeItem(e, "prdtStatus")}
-                                ></SelectBox>
+                                >
+                                </SelectBox>
                                 <Label text={"*제품상태"}></Label>
                             </SimpleItem>
                             <SimpleItem>
@@ -231,6 +232,24 @@ const ManufactureProcessRevDialog = () => {
                                     onValueChanged={(e) => changeItem(e, "revUser")}
                                 ></SelectBox>
                                 <Label text={"*개정자"}></Label>
+                            </SimpleItem>
+                            <SimpleItem>
+                                <TextBox
+                                    placeholder={"개정사유"}
+                                    value={focusRow.revCause}
+                                    showClearButton={true}
+                                    onValueChanged={(e) => changeItem(e, "revCause")}
+                                />
+                                <Label text={"개정사유"}></Label>
+                            </SimpleItem>
+                            <SimpleItem>
+                                <TextBox
+                                    placeholder={"비고"}
+                                    value={focusRow.description}
+                                    showClearButton={true}
+                                    onValueChanged={(e) => changeItem(e, "description")}
+                                />
+                                <Label text={"비고"}></Label>
                             </SimpleItem>
                         </Form>
                         </div>
@@ -273,7 +292,9 @@ const ManufactureProcessRevDialog = () => {
                                     type="success"
                                     stylingMode="contained"
                                     style={{float:"right", marginTop: 20}}
-                                    onClick={() => dispatch(masterManufactureAction.revision())}
+                                    onClick={() => {
+                                        dispatch(masterManufactureAction.revision())
+                                    }}
                                 />
                             </div>
                         </Item>

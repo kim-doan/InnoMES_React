@@ -1,12 +1,12 @@
+import * as _ from 'lodash'
 import { useEffect, useState } from "react";
 import { Card } from "@material-ui/core";
-import { DataGrid } from "devextreme-react";
-import { Column, Editing, Lookup } from "devextreme-react/data-grid";
+import { DataGrid, Validator } from "devextreme-react";
+import { Column, CustomRule, Editing, Lookup, RequiredRule } from "devextreme-react/data-grid";
 import { useDispatch, useSelector } from "react-redux"
 import { ConvertToLookUp } from "../../../../../../common/Grid/lookUpUtils";
 import { masterManufactureAction, masterManufactureSelector } from "../../../slice";
 import SearchLookUp from "../../../../../../common/SearchLookUp/SearchLookUp";
-import * as _ from 'lodash'
 import { GetProcessNode } from "../../../../../../common/Pool/MasterPool/MasterPool";
 import { ConstantLine } from "devextreme-react/chart";
 
@@ -48,6 +48,23 @@ const RouteGrid = () => {
         }
     }
 
+    const routeUniqueValidate = (event) => {
+        var procCode = event.data.procCode;
+        var procSeq = event.data.procSeq;
+
+        var uCount = _.filter(focusRow.routeList, (n) => {
+            if(procSeq === undefined) {
+                //신규 라우팅일경우
+                return (n.procCode === procCode);
+            } else {
+                //기존 라우팅 수정일 경우
+                return (n.procCode === procCode && n.procSeq !== procSeq);
+            }
+        }).length;
+
+        return uCount > 0 ? false : true;
+    }
+
     return (
         <div style={{ marginTop: 20, marginRight: 10 }}>
             <Card>
@@ -77,6 +94,8 @@ const RouteGrid = () => {
                             displayExpr="procName"
                             valueExpr="procCode"
                         />
+                        <RequiredRule/>
+                        <CustomRule type="custom" validationCallback={routeUniqueValidate} message="라우팅 공정은 중복될 수 없습니다." />
                     </Column>
                     <Column dataField="passYN" caption="패스공정여부" dataType="boolean"></Column>
                     <Column dataField="outQnt" caption="산출장입량" format="#,##0.##"></Column>

@@ -1,9 +1,10 @@
+import * as _ from 'lodash'
 import { useEffect, useState } from "react";
 import { DataGrid } from "devextreme-react";
 import { useDispatch, useSelector } from "react-redux";
 import { masterManufactureAction, masterManufactureSelector } from "../../../slice";
 import { Card } from "@material-ui/core";
-import { Column, Editing, Lookup } from "devextreme-react/data-grid";
+import { Column, CustomRule, Editing, Lookup, RequiredRule } from "devextreme-react/data-grid";
 import { ConvertToLookUp } from "../../../../../../common/Grid/lookUpUtils";
 import SearchLookUp from "../../../../../../common/SearchLookUp/SearchLookUp";
 import { GetBomNode } from "../../../../../../common/Pool/MasterPool/MasterPool";
@@ -57,6 +58,7 @@ const BomGrid = () => {
                             displayExpr="itemName"
                             valueExpr="itemId"
                         />
+                        <RequiredRule/>
                     </Column>
                     <Column dataField="inQnt" caption="투입량"></Column>
                     <Column dataField="inUnit" caption="투입단위">

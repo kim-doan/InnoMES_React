@@ -16,7 +16,8 @@ export const initialState = {
     defaultParam: {
         pageable: { size: 10, page: 0 }
     },
-    totalCount: 0
+    totalCount: 0,
+    dlgState: false, // 팝업상태
 }
 
 const reducers = {
@@ -47,6 +48,13 @@ const reducers = {
     revisionFail: (state, { payload: error }) => {
         state.isLoading = false
         state.error = error
+    },
+    setDlgState: (state, payload) => {
+        state.dlgState = payload.payload
+
+        // if(payload.payload === false) {
+        //     state.focusRow = [];
+        // }
     },
     setDefaultParam: (state, payload) => {
         state.defaultParam = payload.payload;
@@ -151,6 +159,11 @@ const selectSuccessState = createSelector(
     (success) => success
 )
 
+const selectDlgState = createSelector(
+    (state) => state.dlgState,
+    (dlgState) => dlgState
+)
+
 const selectMsgState = createSelector(
     (state) => state.msg,
     (msg) => msg
@@ -195,6 +208,7 @@ const selectAllState = createSelector(
     selectLoadingState,
     selectErrorState,
     selectSuccessState,
+    selectDlgState,
     selectMsgState,
     selectRouteSelectRowKey,
     selectManufactureListState,
@@ -203,11 +217,12 @@ const selectAllState = createSelector(
     selectFocusRowState,
     selectDefaultParamState,
     selectTotalCountState,
-    (isLoading, error, success, msg, routeSelectRowKey, manufactureList, routeList, bomList, focusRow, defaultParam, totalCount) => {
+    (isLoading, error, success, dlgState, msg, routeSelectRowKey, manufactureList, routeList, bomList, focusRow, defaultParam, totalCount) => {
         return {
             isLoading,
             error,
             success,
+            dlgState,
             msg,
             routeSelectRowKey,
             manufactureList,
@@ -224,6 +239,7 @@ export const masterManufactureSelector = {
     isLoading: (state) => selectLoadingState(state[MASTER_MANUFACTURE_PROCESS]),
     error: (state) => selectErrorState(state[MASTER_MANUFACTURE_PROCESS]),
     success: (state) => selectSuccessState(state[MASTER_MANUFACTURE_PROCESS]),
+    dlgState: (state) => selectDlgState(state[MASTER_MANUFACTURE_PROCESS]),
     msg: (state) => selectMsgState(state[MASTER_MANUFACTURE_PROCESS]),
     routeSelectRowKey: (state) => selectRouteSelectRowKey(state[MASTER_MANUFACTURE_PROCESS]),
     manufactureList: (state) => selectManufactureListState(state[MASTER_MANUFACTURE_PROCESS]),

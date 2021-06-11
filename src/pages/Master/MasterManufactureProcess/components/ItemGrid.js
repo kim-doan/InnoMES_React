@@ -1,6 +1,7 @@
 import { Card, TablePagination } from "@material-ui/core";
 import { DataGrid } from "devextreme-react";
 import { Column, Editing, Lookup } from "devextreme-react/data-grid";
+import { before } from "lodash";
 import { useRef } from "react";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux"
@@ -10,7 +11,7 @@ import { masterManufactureAction, masterManufactureSelector } from "../slice";
 
 const ItemGrid = () => {
     const dispatch = useDispatch();
-    const { manufactureList, defaultParam, totalCount } = useSelector(masterManufactureSelector.all);
+    const { manufactureList, defaultParam, totalCount, success } = useSelector(masterManufactureSelector.all);
     const [selectedRowKeys, setSelectedRowKeys] = useState(0);
 
     const mounted = useRef(false);

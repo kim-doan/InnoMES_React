@@ -14,9 +14,8 @@ import { masterManufactureAction, masterManufactureSelector } from "./slice";
 const MasterManufactureProcess = () => {
     const dispatch = useDispatch();
 
-    const { defaultParam } = useSelector(masterManufactureSelector.all);
+    const { defaultParam, dlgState } = useSelector(masterManufactureSelector.all);
 
-    const [dlgState, setDlgState] = useState(false);
     const [dlgTitle, setDlgTitle] = useState("");
 
     useEffect(() => {
@@ -35,13 +34,13 @@ const MasterManufactureProcess = () => {
 
     //개정
     const mainRev = () => {
-        setDlgState(true)
+        dispatch(masterManufactureAction.setDlgState(true))
         setDlgTitle("제조공정정보 개정");
     }
 
     //수정
     const mainMod = () => {
-        setDlgState(true)
+        dispatch(masterManufactureAction.setDlgState(true))
         setDlgTitle("제조공정정보 수정");
     }
 
@@ -54,7 +53,7 @@ const MasterManufactureProcess = () => {
         <div>
             <Popup
                 visible={dlgState}
-                onHiding={() => setDlgState(false)}
+                onHiding={() => dispatch(masterManufactureAction.setDlgState(false))}
                 container=".dx-viewport"
                 closeOnOutsideClick={true}
                 title={dlgTitle}
