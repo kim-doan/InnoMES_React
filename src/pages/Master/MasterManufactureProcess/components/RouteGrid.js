@@ -9,7 +9,7 @@ import { masterManufactureAction, masterManufactureSelector } from "../slice";
 
 const RouteGrid = () => {
     const dispatch = useDispatch();
-    const { routeList, routeSelectRowKey, focusRow } = useSelector(masterManufactureSelector.all);
+    const { routeList, routeSelectRowKey, manufactureList, itemSelectRowKey } = useSelector(masterManufactureSelector.all);
     const [selectedRowKeys, setSelectedRowKeys] = useState(0);
 
     useEffect(() => {
@@ -39,7 +39,7 @@ const RouteGrid = () => {
         <div style={{ padding: 20, paddingTop: 5 }}>
             <Card>
                 <DataGrid
-                    dataSource={focusRow.routeList}
+                    dataSource={manufactureList[itemSelectRowKey].routeList}
                     keyExpr="procSeq"
                     focusedRowIndex={routeSelectRowKey}
                     focusedRowEnabled={true}

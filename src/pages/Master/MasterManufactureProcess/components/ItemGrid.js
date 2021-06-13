@@ -27,7 +27,7 @@ const ItemGrid = () => {
         if(e.rowIndex > -1) {
             dispatch(masterManufactureAction.setItemSelectRowKey(e.row.rowIndex))
             // dispatch(masterManufactureAction.setRouteList(e.row.data.routeList))
-            dispatch(masterManufactureAction.setFocusRow(e.row.data))
+            // dispatch(masterManufactureAction.setFocusRow(e.row.data))
         }
     }
 
