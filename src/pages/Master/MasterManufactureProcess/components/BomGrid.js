@@ -14,7 +14,7 @@ const BomGrid = () => {
         <div style={{ padding: 20, paddingTop: 5}}>
             <Card>
                 <DataGrid
-                    dataSource={bomList}
+                    dataSource={[]}
                     keyExpr="bomSeq"
                     columnAutoWidth={true}
                     rowAlternationEnabled={true}
