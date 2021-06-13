@@ -12,7 +12,7 @@ import { masterManufactureAction, masterManufactureSelector } from "../slice";
 const ItemGrid = () => {
     const dispatch = useDispatch();
     const { manufactureList, defaultParam, totalCount, itemSelectRowKey } = useSelector(masterManufactureSelector.all);
-    const [selectedRowKeys, setSelectedRowKeys] = useState(0);
+    // const [selectedRowKeys, setSelectedRowKeys] = useState(0);
 
     const mounted = useRef(false);
     useEffect(() => {
@@ -26,17 +26,16 @@ const ItemGrid = () => {
     const onFocusedRowChanged = (e) => {
         if(e.rowIndex > -1) {
             dispatch(masterManufactureAction.setItemSelectRowKey(e.row.rowIndex))
-            // dispatch(masterManufactureAction.setRouteList(e.row.data.routeList))
-            // dispatch(masterManufactureAction.setFocusRow(e.row.data))
+            dispatch(masterManufactureAction.setFocusRow(e.row.data))
         }
     }
 
-    const onOptionChanged = (e) => {
-        if(e.fullName == 'focusedRowIndex') {
-            if(e.value > -1)
-                setSelectedRowKeys(e.value);
-        }
-    }
+    // const onOptionChanged = (e) => {
+    //     if(e.fullName == 'focusedRowIndex') {
+    //         if(e.value > -1)
+    //             setSelectedRowKeys(e.value);
+    //     }
+    // }
 
     return (
         <div style={{ padding: 20, paddingTop: 5 }}>
@@ -44,11 +43,11 @@ const ItemGrid = () => {
                 <DataGrid
                     dataSource={manufactureList}
                     keyExpr="prdtId"
-                    focusedRowIndex={selectedRowKeys}
+                    focusedRowIndex={itemSelectRowKey}
                     focusedRowEnabled={true}
                     columnAutoWidth={true}
                     rowAlternationEnabled={true}
-                    onOptionChanged={onOptionChanged}
+                    // onOptionChanged={onOptionChanged}
                     showColumnLines={true}
                     loadPanel={{
                         showIndicator: true,

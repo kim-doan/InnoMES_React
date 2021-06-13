@@ -12,18 +12,17 @@ const RouteGrid = () => {
     const { routeList, routeSelectRowKey, manufactureList, itemSelectRowKey } = useSelector(masterManufactureSelector.all);
     const [selectedRowKeys, setSelectedRowKeys] = useState(0);
 
-    useEffect(() => {
-        if(routeList.length <= 0) {
-            dispatch(masterManufactureAction.setBomList([]))
-        } else {
-            dispatch(masterManufactureAction.setBomList(routeList[0].bomList))
-        }
-    }, [routeList])
+    // useEffect(() => {
+    //     if(routeList.length <= 0) {
+    //         dispatch(masterManufactureAction.setBomList([]))
+    //     } else {
+    //         dispatch(masterManufactureAction.setBomList(routeList[0].bomList))
+    //     }
+    // }, [routeList])
 
     const onFocusedRowChanged = (e) => {
         if(e.rowIndex > -1) {
             dispatch(masterManufactureAction.setRouteSelectRowKey(e.row.rowIndex))
-            dispatch(masterManufactureAction.setBomList(e.row.data.bomList))
         } 
     }
 
@@ -39,7 +38,7 @@ const RouteGrid = () => {
         <div style={{ padding: 20, paddingTop: 5 }}>
             <Card>
                 <DataGrid
-                    dataSource={manufactureList[itemSelectRowKey].routeList}
+                    dataSource={manufactureList[itemSelectRowKey] !== undefined && manufactureList[itemSelectRowKey].routeList}
                     keyExpr="procSeq"
                     focusedRowIndex={routeSelectRowKey}
                     focusedRowEnabled={true}

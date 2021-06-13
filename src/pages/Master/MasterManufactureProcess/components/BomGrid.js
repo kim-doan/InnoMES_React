@@ -8,13 +8,15 @@ import { ConvertToLookUp } from "../../../../common/Grid/lookUpUtils";
 
 const BomGrid = () => {
     const dispatch = useDispatch();
-    const { bomList } = useSelector(masterManufactureSelector.all);
+    const { manufactureList, itemSelectRowKey, routeSelectRowKey } = useSelector(masterManufactureSelector.all);
 
     return (
         <div style={{ padding: 20, paddingTop: 5}}>
             <Card>
                 <DataGrid
-                    dataSource={[]}
+                    dataSource={manufactureList[itemSelectRowKey] !== undefined 
+                        && manufactureList[itemSelectRowKey].routeList[routeSelectRowKey] !== undefined 
+                        && manufactureList[itemSelectRowKey].routeList[routeSelectRowKey].bomList}
                     keyExpr="bomSeq"
                     columnAutoWidth={true}
                     rowAlternationEnabled={true}

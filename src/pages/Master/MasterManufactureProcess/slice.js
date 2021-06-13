@@ -16,8 +16,6 @@ export const initialState = {
     },
     //메인그리드
     manufactureList: [], //전체
-    routeList: [], // 포커스 라우팅
-    bomList: [], // 포커스 BOM
     itemSelectRowKey: 0, // 포커스 품목 index
     routeSelectRowKey: 0, // 포커스 라우팅 index
     //다이얼로그
@@ -57,8 +55,6 @@ const reducers = {
     },
     complete: (state, {payload: { prdtId, routeList }}) => {
         _.filter(state.manufactureList, { 'prdtId' : prdtId }).routeList = routeList;
-        state.routeList = routeList;
-        state.bomList = routeList[state.routeSelectRowKey].bomList;
     },
     setItemSelectRowKey: (state, payload) => {
         state.itemSelectRowKey = payload.payload
@@ -75,12 +71,6 @@ const reducers = {
     },
     setDefaultParam: (state, payload) => {
         state.defaultParam = payload.payload;
-    },
-    setRouteList: (state, payload) => {
-        state.routeList = payload.payload;
-    },
-    setBomList: (state, payload) => {
-        state.bomList = payload.payload;
     },
     setFocusRow: (state, payload) => {
         state.focusRow = payload.payload;
