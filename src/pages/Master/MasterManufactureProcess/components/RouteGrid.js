@@ -55,7 +55,7 @@ const RouteGrid = () => {
                 >
                     <Column dataField="procSeq" width={60} caption="순번"></Column>
                     <Column dataField="procCode" caption="공정코드"></Column>
-                    <Column dataField="procCode" caption="공정명">
+                    <Column name="procName" dataField="procCode" caption="공정명">
                         <Lookup
                             dataSource={ConvertToLookUp("Process", "")}
                             displayExpr="procName"

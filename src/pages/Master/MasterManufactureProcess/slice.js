@@ -53,8 +53,8 @@ const reducers = {
         state.isLoading = false
         state.error = error
     },
-    complete: (state, {payload: { prdtId, routeList }}) => {
-        _.filter(state.manufactureList, { 'prdtId' : prdtId }).routeList = routeList;
+    complete: (state, {payload: { routeList }}) => {
+        state.manufactureList[state.itemSelectRowKey].routeList = routeList;
     },
     addDlgRouteList: (state, payload) => {
         state.focusRow.routeList.push({

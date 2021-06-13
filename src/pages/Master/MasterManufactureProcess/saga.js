@@ -27,12 +27,10 @@ export function* revisionManufactureProcess() {
 
     try {
         const param = yield select(masterManufactureSelector.focusRow)
-        
         const result = yield call(setManufactureProcessRev, param)
-
         if (result.success) {
             yield put(show({ type: 'success', message: '제조공정정보를 개정했습니다.'}))
-            yield put(complete({ prdtId: param.prdtId, routeList: param.routeList}))
+            yield put(complete({ routeList: param.routeList}))
             yield put(setDlgState(false))
         } else {
             yield put(show({ type: 'error', message: result.msg }))

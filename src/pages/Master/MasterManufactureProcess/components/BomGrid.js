@@ -28,14 +28,14 @@ const BomGrid = () => {
                     height={280}
                 >
                     <Column dataField="bomSeq" width={60} caption="순번"></Column>
-                    <Column dataField="itemId" caption="투입소재">
+                    <Column name="itemCode" dataField="itemId" caption="투입소재">
                         <Lookup
                             dataSource={ConvertToLookUp("Item", "")}
                             displayExpr="itemCode"
                             valueExpr="itemId"
                         ></Lookup>
                     </Column>
-                    <Column dataField="itemId" caption="투입소재명">
+                    <Column name="itemName" dataField="itemId" caption="투입소재명">
                         <Lookup
                             dataSource={ConvertToLookUp("Item", "")}
                             displayExpr="itemName"
