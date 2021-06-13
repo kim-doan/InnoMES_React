@@ -12,7 +12,7 @@ import { ConstantLine } from "devextreme-react/chart";
 
 const RouteGrid = () => {
     const dispatch = useDispatch();
-    const { focusRow, routeSelectRowKey } = useSelector(masterManufactureSelector.all);
+    const { focusRow, dlgRouteSelectRowKey } = useSelector(masterManufactureSelector.all);
 
     const [selectedRowKeys, setSelectedRowKeys] = useState(0);
 
@@ -20,13 +20,13 @@ const RouteGrid = () => {
     //     if(e.fullName == 'focusedRowIndex') {
     //         if(e.value > -1) {
     //             setSelectedRowKeys(e.value);
-    //             dispatch(masterManufactureAction.setRouteSelectRowKey(e.value));
+    //             dispatch(masterManufactureAction.setDlgRouteSelectRowKey(e.value));
     //         }
     //     }
     // }
 
     const onFocusedRowChanged = (e) => {
-        dispatch(masterManufactureAction.setRouteSelectRowKey(e.row.rowIndex));
+        dispatch(masterManufactureAction.setDlgRouteSelectRowKey(e.row.rowIndex));
     }
 
     const onInitNewRow = (event) => {
@@ -71,7 +71,7 @@ const RouteGrid = () => {
                 <DataGrid
                     dataSource={focusRow.routeList}
                     keyExpr="procSeq"
-                    focusedRowIndex={routeSelectRowKey}
+                    focusedRowIndex={dlgRouteSelectRowKey}
                     focusedRowEnabled={true}
                     onInitNewRow={onInitNewRow}
                     // onOptionChanged={onOptionChanged}

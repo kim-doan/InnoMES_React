@@ -22,7 +22,7 @@ export function* manufactureItemListLoad() {
 }
 
 export function* revisionManufactureProcess() {
-    const { revisionSuccess, revisionFail, setDlgState } = masterManufactureAction
+    const { revisionSuccess, revisionFail, setDlgState, complete, load } = masterManufactureAction
     const { show } = toastAction
 
     try {
@@ -32,6 +32,7 @@ export function* revisionManufactureProcess() {
 
         if (result.success) {
             yield put(show({ type: 'success', message: '제조공정정보를 개정했습니다.'}))
+            yield put(complete({ prdtId: param.prdtId, routeList: param.routeList}))
             yield put(setDlgState(false))
         } else {
             yield put(show({ type: 'error', message: result.msg }))

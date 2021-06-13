@@ -9,7 +9,7 @@ import { masterManufactureAction, masterManufactureSelector } from "../slice";
 
 const RouteGrid = () => {
     const dispatch = useDispatch();
-    const { routeList } = useSelector(masterManufactureSelector.all);
+    const { routeList, routeSelectRowKey } = useSelector(masterManufactureSelector.all);
     const [selectedRowKeys, setSelectedRowKeys] = useState(0);
 
     useEffect(() => {
@@ -22,16 +22,18 @@ const RouteGrid = () => {
 
     const onFocusedRowChanged = (e) => {
         if(e.rowIndex > -1) {
+            dispatch(masterManufactureAction.setRouteSelectRowKey(e.row.rowIndex))
             dispatch(masterManufactureAction.setBomList(e.row.data.bomList))
         } 
     }
 
-    const onOptionChanged = (e) => {
-        if(e.fullName == 'focusedRowIndex') {
-            if(e.value > -1)
-                setSelectedRowKeys(e.value);
-        }
-    }
+    // const onOptionChanged = (e) => {
+    //     if(e.fullName == 'focusedRowIndex') {
+    //         if(e.value > -1)
+    //             // setSelectedRowKeys(e.value);
+    //             dispatch(masterManufactureAction.setRouteSelectRowKey(e.value))
+    //     }
+    // }
 
     return (
         <div style={{ padding: 20, paddingTop: 5 }}>
@@ -39,9 +41,9 @@ const RouteGrid = () => {
                 <DataGrid
                     dataSource={routeList}
                     keyExpr="procSeq"
-                    focusedRowIndex={selectedRowKeys}
+                    focusedRowIndex={routeSelectRowKey}
                     focusedRowEnabled={true}
-                    onOptionChanged={onOptionChanged}
+                    // onOptionChanged={onOptionChanged}
                     onFocusedRowChanged={onFocusedRowChanged}
                     columnAutoWidth={true}
                     rowAlternationEnabled={true}
@@ -54,7 +56,13 @@ const RouteGrid = () => {
                 >
                     <Column dataField="procSeq" width={60} caption="순번"></Column>
                     <Column dataField="procCode" caption="공정코드"></Column>
-                    <Column dataField="procName" caption="공정명"></Column>
+                    <Column dataField="procCode" caption="공정명">
+                        <Lookup
+                            dataSource={ConvertToLookUp("Process", "")}
+                            displayExpr="procName"
+                            valueExpr="procCode"
+                        ></Lookup>
+                    </Column>
                     <Column dataField="inOutType" caption="내외작">
                         <Lookup
                             dataSource={ConvertToLookUp("CommonCode", "TPS019")}

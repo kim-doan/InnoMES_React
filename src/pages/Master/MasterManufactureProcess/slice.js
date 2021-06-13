@@ -4,20 +4,26 @@ import * as _ from 'lodash'
 import { Component, createElement } from 'react'
 
 export const initialState = {
+    //API 응답
     isLoading : false,
     error: null,
     success : undefined,
     msg: null,
-    routeSelectRowKey: 0,
-    manufactureList: [],
-    routeList: [],
-    bomList: [],
-    focusRow: {},
+    totalCount: 0,
+    //API 요청
     defaultParam: {
         pageable: { size: 10, page: 0 }
     },
-    totalCount: 0,
-    dlgState: false, // 팝업상태
+    //메인그리드
+    manufactureList: [], //전체
+    routeList: [], // 포커스 라우팅
+    bomList: [], // 포커스 BOM
+    itemSelectRowKey: 0, // 포커스 품목 index
+    routeSelectRowKey: 0, // 포커스 라우팅 index
+    //다이얼로그
+    dlgState: false, // 팝업상태 false: 닫음, true: 열음
+    focusRow: {}, // 포커스된 요소정보 
+    dlgRouteSelectRowKey: 0,
 }
 
 const reducers = {
@@ -49,6 +55,17 @@ const reducers = {
         state.isLoading = false
         state.error = error
     },
+    complete: (state, {payload: { prdtId, routeList }}) => {
+        _.filter(state.manufactureList, { 'prdtId' : prdtId }).routeList = routeList;
+        state.routeList = routeList;
+        state.bomList = routeList[state.routeSelectRowKey].bomList;
+    },
+    setItemSelectRowKey: (state, payload) => {
+        state.itemSelectRowKey = payload.payload
+    },
+    setRouteSelectRowKey: (state, payload) => {
+        state.routeSelectRowKey = payload.payload
+    },
     setDlgState: (state, payload) => {
         state.dlgState = payload.payload
 
@@ -68,8 +85,8 @@ const reducers = {
     setFocusRow: (state, payload) => {
         state.focusRow = payload.payload;
     },
-    setRouteSelectRowKey: (state, payload) => {
-        state.routeSelectRowKey = payload.payload;
+    setDlgRouteSelectRowKey: (state, payload) => {
+        state.dlgRouteSelectRowKey = payload.payload;
     },
     setDlgRouteList: (state, payload) => {
         payload.payload.forEach((value) => {
@@ -91,6 +108,13 @@ const reducers = {
                         }
                     }
                     break;
+                case 'remove':
+                    _.remove(state.focusRow.routeList, { 'procSeq': procSeq });
+
+                    state.focusRow.routeList.forEach((v, index) => {
+                        v.procSeq = (index + 1)
+                    })
+                    break;
             }
 
             //패스공정일 경우 해당 공정 routingSeq 0
@@ -107,7 +131,7 @@ const reducers = {
         })
     },
     setDlgBomList: (state, payload) => {
-        var bomList = state.focusRow.routeList[state.routeSelectRowKey].bomList;
+        var bomList = state.focusRow.routeList[state.dlgRouteSelectRowKey].bomList;
         var changes = payload.payload.changes;
 
         changes.forEach((value) => {
@@ -129,10 +153,16 @@ const reducers = {
                         }
                     }
                     break;
+                case "remove":
+                    _.remove(bomList, { 'bomSeq' : bomSeq })
+                    bomList.forEach((v, index) => {
+                        v.bomSeq = (index + 1);
+                    })
+                    break;
             }
         })
 
-        state.focusRow.routeList[state.routeSelectRowKey].bomList = bomList;
+        state.focusRow.routeList[state.dlgRouteSelectRowKey].bomList = bomList;
     }
 }
 
@@ -179,9 +209,19 @@ const selectFocusRowState = createSelector(
     (focusRow) => focusRow
 )
 
+const selectItemSelectRowKey = createSelector(
+    (state) => state.itemSelectRowKey,
+    (itemSelectRowKey) => itemSelectRowKey
+)
+
 const selectRouteSelectRowKey = createSelector(
     (state) => state.routeSelectRowKey,
     (routeSelectRowKey) => routeSelectRowKey
+)
+
+const selectDlgRouteSelectRowKey = createSelector(
+    (state) => state.dlgRouteSelectRowKey,
+    (dlgRouteSelectRowKey) => dlgRouteSelectRowKey
 )
 
 const selectDefaultParamState = createSelector(
@@ -210,21 +250,25 @@ const selectAllState = createSelector(
     selectSuccessState,
     selectDlgState,
     selectMsgState,
+    selectItemSelectRowKey,
     selectRouteSelectRowKey,
+    selectDlgRouteSelectRowKey,
     selectManufactureListState,
     selectRouteListState,
     selectBomListState,
     selectFocusRowState,
     selectDefaultParamState,
     selectTotalCountState,
-    (isLoading, error, success, dlgState, msg, routeSelectRowKey, manufactureList, routeList, bomList, focusRow, defaultParam, totalCount) => {
+    (isLoading, error, success, dlgState, msg, itemSelectRowKey, routeSelectRowKey, dlgRouteSelectRowKey, manufactureList, routeList, bomList, focusRow, defaultParam, totalCount) => {
         return {
             isLoading,
             error,
             success,
             dlgState,
             msg,
+            itemSelectRowKey,
             routeSelectRowKey,
+            dlgRouteSelectRowKey,
             manufactureList,
             routeList,
             bomList,
@@ -241,7 +285,9 @@ export const masterManufactureSelector = {
     success: (state) => selectSuccessState(state[MASTER_MANUFACTURE_PROCESS]),
     dlgState: (state) => selectDlgState(state[MASTER_MANUFACTURE_PROCESS]),
     msg: (state) => selectMsgState(state[MASTER_MANUFACTURE_PROCESS]),
+    itemSelectRowKey: (state) => selectItemSelectRowKey(state[MASTER_MANUFACTURE_PROCESS]),
     routeSelectRowKey: (state) => selectRouteSelectRowKey(state[MASTER_MANUFACTURE_PROCESS]),
+    dlgRouteSelectRowKey: (state) => selectDlgRouteSelectRowKey(state[MASTER_MANUFACTURE_PROCESS]),
     manufactureList: (state) => selectManufactureListState(state[MASTER_MANUFACTURE_PROCESS]),
     routeList: (state) => selectRouteListState(state[MASTER_MANUFACTURE_PROCESS]),
     bomList: (state) => selectBomListState(state[MASTER_MANUFACTURE_PROCESS]),

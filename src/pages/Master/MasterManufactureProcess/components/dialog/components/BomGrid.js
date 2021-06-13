@@ -11,11 +11,11 @@ import { GetBomNode } from "../../../../../../common/Pool/MasterPool/MasterPool"
 
 const BomGrid = () => {
     const dispatch = useDispatch();
-    const { focusRow, routeSelectRowKey } = useSelector(masterManufactureSelector.all);
+    const { focusRow, dlgRouteSelectRowKey } = useSelector(masterManufactureSelector.all);
 
     const onInitNewRow = (event) => {
         event.component.saveEditData();
-        event.data.procCode = focusRow.routeList[routeSelectRowKey].procCode;
+        event.data.procCode = focusRow.routeList[dlgRouteSelectRowKey].procCode;
         event.data.prdtId = focusRow.prdtId;
         event.data.inQnt = 0;
         event.data.inUnit = "UNT001001";
@@ -37,7 +37,7 @@ const BomGrid = () => {
         <div style={{ marginTop: 20, marginLeft: 10}}>
             <Card>
                 <DataGrid
-                    dataSource={focusRow.routeList !== undefined && focusRow.routeList[routeSelectRowKey] !== undefined && focusRow.routeList[routeSelectRowKey].bomList}
+                    dataSource={focusRow.routeList !== undefined && focusRow.routeList[dlgRouteSelectRowKey] !== undefined && focusRow.routeList[dlgRouteSelectRowKey].bomList}
                     keyExpr="bomSeq"
                     columnAutoWidth={true}
                     rowAlternationEnabled={true}
