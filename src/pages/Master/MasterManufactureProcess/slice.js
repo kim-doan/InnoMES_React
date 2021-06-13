@@ -56,6 +56,32 @@ const reducers = {
     complete: (state, {payload: { prdtId, routeList }}) => {
         _.filter(state.manufactureList, { 'prdtId' : prdtId }).routeList = routeList;
     },
+    addDlgRouteList: (state, payload) => {
+        state.focusRow.routeList.push({
+            procSeq : state.focusRow.routeList.length + 1, 
+            routingSeq : state.focusRow.routeList.length + 1,
+            inQnt : 0,
+            outQnt : 0,
+            qntUnit : 'UNT002001',
+            leadTime : 0,
+            settingTime : 0,
+            unitWeight : 0,
+            bomList : []
+        })
+    },
+    addDlgBomList: (state, payload) => {
+        state.focusRow.routeList[state.dlgRouteSelectRowKey].bomList.push({
+            bomSeq : state.focusRow.routeList[state.dlgRouteSelectRowKey].bomList.length + 1,
+            swapSeq: 0,
+            procCode : state.focusRow.routeList[state.dlgRouteSelectRowKey].procCode,
+            prdtId : state.focusRow.prdtId,
+            inQnt : 0,
+            inUnit : 'UNT001001',
+            createUser : "1",
+            updateUser : "1",
+            used : 1,
+        })
+    },
     setItemSelectRowKey: (state, payload) => {
         state.itemSelectRowKey = payload.payload
     },
@@ -87,10 +113,6 @@ const reducers = {
             var editRow = _.find(state.focusRow.routeList, { procSeq: procSeq })
 
             switch (type) {
-                case "insert":
-                    data["procSeq"] = state.focusRow.routeList.length + 1;
-                    state.focusRow.routeList.push(data);
-                    break;
                 case "update":
                     for(var key in data) {
                         if(editRow[key] != data[key]) {
@@ -224,16 +246,6 @@ const selectTotalCountState = createSelector(
     (totalCount) => totalCount
 )
 
-const selectRouteListState = createSelector(
-    (state) => state.routeList,
-    (routeList) => routeList
-)
-
-const selectBomListState = createSelector(
-    (state) => state.bomList,
-    (bomList) => bomList
-)
-
 const selectAllState = createSelector(
     selectLoadingState,
     selectErrorState,
@@ -244,12 +256,10 @@ const selectAllState = createSelector(
     selectRouteSelectRowKey,
     selectDlgRouteSelectRowKey,
     selectManufactureListState,
-    selectRouteListState,
-    selectBomListState,
     selectFocusRowState,
     selectDefaultParamState,
     selectTotalCountState,
-    (isLoading, error, success, dlgState, msg, itemSelectRowKey, routeSelectRowKey, dlgRouteSelectRowKey, manufactureList, routeList, bomList, focusRow, defaultParam, totalCount) => {
+    (isLoading, error, success, dlgState, msg, itemSelectRowKey, routeSelectRowKey, dlgRouteSelectRowKey, manufactureList, focusRow, defaultParam, totalCount) => {
         return {
             isLoading,
             error,
@@ -260,8 +270,6 @@ const selectAllState = createSelector(
             routeSelectRowKey,
             dlgRouteSelectRowKey,
             manufactureList,
-            routeList,
-            bomList,
             focusRow,
             defaultParam,
             totalCount
@@ -279,8 +287,6 @@ export const masterManufactureSelector = {
     routeSelectRowKey: (state) => selectRouteSelectRowKey(state[MASTER_MANUFACTURE_PROCESS]),
     dlgRouteSelectRowKey: (state) => selectDlgRouteSelectRowKey(state[MASTER_MANUFACTURE_PROCESS]),
     manufactureList: (state) => selectManufactureListState(state[MASTER_MANUFACTURE_PROCESS]),
-    routeList: (state) => selectRouteListState(state[MASTER_MANUFACTURE_PROCESS]),
-    bomList: (state) => selectBomListState(state[MASTER_MANUFACTURE_PROCESS]),
     focusRow: (state) => selectFocusRowState(state[MASTER_MANUFACTURE_PROCESS]),
     defaultParam: (state) => selectDefaultParamState(state[MASTER_MANUFACTURE_PROCESS]),
     totalCount: (state) => selectTotalCountState(state[MASTER_MANUFACTURE_PROCESS]),

@@ -8,6 +8,8 @@ import { Column, CustomRule, Editing, Lookup, RequiredRule } from "devextreme-re
 import { ConvertToLookUp } from "../../../../../../common/Grid/lookUpUtils";
 import SearchLookUp from "../../../../../../common/SearchLookUp/SearchLookUp";
 import { GetBomNode } from "../../../../../../common/Pool/MasterPool/MasterPool";
+import ResponsiveBox, { Col, Item, Location, Row } from "devextreme-react/responsive-box";
+import ControlBox from '../../../../../../components/ControlBox/ControlBox';
 
 const BomGrid = () => {
     const dispatch = useDispatch();
@@ -27,49 +29,71 @@ const BomGrid = () => {
 
     const onSaving = (event) => {
         event.cancel = true
-        if(event.changes.length) {
+        if (event.changes.length) {
             dispatch(masterManufactureAction.setDlgBomList(event));
             event.component.cancelEditData();
         }
     }
 
+    const mainAdd = () => {
+        dispatch(masterManufactureAction.addDlgBomList());
+    }
+
     return (
-        <div style={{ marginTop: 20, marginLeft: 10}}>
-            <Card>
-                <DataGrid
-                    dataSource={focusRow.routeList !== undefined && focusRow.routeList[dlgRouteSelectRowKey] !== undefined && focusRow.routeList[dlgRouteSelectRowKey].bomList}
-                    keyExpr="bomSeq"
-                    columnAutoWidth={true}
-                    rowAlternationEnabled={true}
-                    onInitNewRow={onInitNewRow}
-                    showColumnLines={true}
-                    onSaving={onSaving}
-                    loadPanel={{
-                        showIndicator: true,
-                        enabled: true
-                    }}
-                    height={450}
-                >
-                    <Editing mode="batch" allowUpdating={true} allowAdding={true} allowDeleting={true} />
-                    <Column dataField="bomSeq" width={60} caption="순번" allowEditing={false}></Column>
-                    <Column dataField="itemId" caption="투입소재" editCellType="Bom" editCellComponent={SearchLookUp}>
-                        <Lookup
-                            dataSource={GetBomNode()}
-                            displayExpr="itemName"
-                            valueExpr="itemId"
-                        />
-                        <RequiredRule/>
-                    </Column>
-                    <Column dataField="inQnt" caption="투입량"></Column>
-                    <Column dataField="inUnit" caption="투입단위">
-                        <Lookup
-                            dataSource={ConvertToLookUp("CommonCode", "UNT001")}
-                            displayExpr="codeKR"
-                            valueExpr="code"
-                        ></Lookup>
-                    </Column>
-                </DataGrid>
-            </Card>
+        <div style={{ marginTop: 20, marginLeft: 10 }}>
+            <ResponsiveBox>
+                <Row></Row>
+                <Row></Row>
+                <Col></Col>
+                <Item>
+                    <Location
+                        row={0}
+                        col={0}
+                    ></Location>
+                    <ControlBox mainAdd={mainAdd}></ControlBox>
+                </Item>
+                <Item>
+                    <Location
+                        row={1}
+                        col={0}
+                    ></Location>
+                    <Card>
+                        <DataGrid
+                            dataSource={focusRow.routeList !== undefined && focusRow.routeList[dlgRouteSelectRowKey] !== undefined && focusRow.routeList[dlgRouteSelectRowKey].bomList}
+                            keyExpr="bomSeq"
+                            columnAutoWidth={true}
+                            rowAlternationEnabled={true}
+                            onInitNewRow={onInitNewRow}
+                            showColumnLines={true}
+                            onSaving={onSaving}
+                            loadPanel={{
+                                showIndicator: true,
+                                enabled: true
+                            }}
+                            height={400}
+                        >
+                            <Editing mode="cell" allowUpdating={true} allowAdding={false} allowDeleting={true} />
+                            <Column dataField="bomSeq" width={60} caption="순번" allowEditing={false}></Column>
+                            <Column dataField="itemId" caption="투입소재" editCellType="Bom" editCellComponent={SearchLookUp}>
+                                <Lookup
+                                    dataSource={GetBomNode()}
+                                    displayExpr="itemName"
+                                    valueExpr="itemId"
+                                />
+                                <RequiredRule />
+                            </Column>
+                            <Column dataField="inQnt" caption="투입량"></Column>
+                            <Column dataField="inUnit" caption="투입단위">
+                                <Lookup
+                                    dataSource={ConvertToLookUp("CommonCode", "UNT001")}
+                                    displayExpr="codeKR"
+                                    valueExpr="code"
+                                ></Lookup>
+                            </Column>
+                        </DataGrid>
+                    </Card>
+                </Item>
+            </ResponsiveBox>
         </div>
     )
 }
