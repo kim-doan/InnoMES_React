@@ -91,9 +91,9 @@ const reducers = {
     setDlgState: (state, payload) => {
         state.dlgState = payload.payload
 
-        // if(payload.payload === false) {
-        //     state.focusRow = [];
-        // }
+        if(payload.payload === false) {
+            state.focusRow = state.manufactureList[state.itemSelectRowKey]
+        }
     },
     setDefaultParam: (state, payload) => {
         state.defaultParam = payload.payload;

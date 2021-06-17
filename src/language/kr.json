@@ -1,7 +1,7 @@
 {
   "en": {
-      "Yes": "Yes",
-      "No": "No",
+      "Yes": "네",
+      "No": "아니오",
       "Cancel": "Cancel",
       "Clear": "Clear",
       "Done": "Done",
@@ -16,7 +16,7 @@
       "dxDropDownEditor-selectLabel": "Select",
 
       "validation-required": "Required",
-      "validation-required-formatted": "{0} is required",
+      "validation-required-formatted": "{0} 을/를 입력하세요.",
       "validation-numeric": "Value must be a number",
       "validation-numeric-formatted": "{0} must be a number",
       "validation-range": "Value is out of range",
@@ -94,7 +94,7 @@
       "dxDataGrid-editingCancelRowChanges": "Cancel",
       "dxDataGrid-editingDeleteRow": "Delete",
       "dxDataGrid-editingUndeleteRow": "Undelete",
-      "dxDataGrid-editingConfirmDeleteMessage": "Are you sure you want to delete this record?",
+      "dxDataGrid-editingConfirmDeleteMessage": "삭제하시겠습니까?",
       "dxDataGrid-validationCancelChanges": "Cancel changes",
       "dxDataGrid-groupPanelEmptyText": "Drag a column header here to group by that column",
       "dxDataGrid-noDataText": "데이터가 없습니다.",

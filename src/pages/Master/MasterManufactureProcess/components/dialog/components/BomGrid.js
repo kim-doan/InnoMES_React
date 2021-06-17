@@ -4,7 +4,7 @@ import { DataGrid } from "devextreme-react";
 import { useDispatch, useSelector } from "react-redux";
 import { masterManufactureAction, masterManufactureSelector } from "../../../slice";
 import { Card } from "@material-ui/core";
-import { Column, CustomRule, Editing, Lookup, RequiredRule } from "devextreme-react/data-grid";
+import { Column, CustomRule, Editing, Lookup, RequiredRule, RowDragging } from "devextreme-react/data-grid";
 import { ConvertToLookUp } from "../../../../../../common/Grid/lookUpUtils";
 import SearchLookUp from "../../../../../../common/SearchLookUp/SearchLookUp";
 import { GetBomNode } from "../../../../../../common/Pool/MasterPool/MasterPool";
@@ -25,6 +25,20 @@ const BomGrid = () => {
         event.data.updateUser = "1";
         event.data.used = 1;
         event.data.swapSeq = 0;
+    }
+
+    const onReorder = (e) => {
+        var copy = _.cloneDeep(focusRow);
+        var temp = copy.routeList[dlgRouteSelectRowKey].bomList[e.toIndex];
+
+        copy.routeList[dlgRouteSelectRowKey].bomList[e.toIndex] = copy.routeList[dlgRouteSelectRowKey].bomList[e.fromIndex];
+        copy.routeList[dlgRouteSelectRowKey].bomList[e.fromIndex] = temp;
+
+        copy.routeList[dlgRouteSelectRowKey].bomList.forEach((v, index) =>{
+            v.bomSeq = (index + 1)
+        })
+        
+        dispatch(masterManufactureAction.setFocusRow(copy))
     }
 
     const onSaving = (event) => {
@@ -72,6 +86,11 @@ const BomGrid = () => {
                             }}
                             height={400}
                         >
+                            <RowDragging
+                                allowReordering={true}
+                                onReorder={onReorder}
+                                showDragIcons={true}
+                            />
                             <Editing mode="cell" allowUpdating={true} allowAdding={false} allowDeleting={true} />
                             <Column dataField="bomSeq" width={60} caption="순번" allowEditing={false}></Column>
                             <Column dataField="itemId" caption="투입소재" editCellType="Bom" editCellComponent={SearchLookUp}>

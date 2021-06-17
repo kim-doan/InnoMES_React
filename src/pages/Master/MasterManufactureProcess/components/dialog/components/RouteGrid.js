@@ -2,7 +2,7 @@ import * as _ from 'lodash'
 import { useEffect, useState } from "react";
 import { Card } from "@material-ui/core";
 import { DataGrid, Validator } from "devextreme-react";
-import { Column, CustomRule, Editing, Lookup, RequiredRule } from "devextreme-react/data-grid";
+import { Column, CustomRule, Editing, Lookup, RequiredRule, RowDragging } from "devextreme-react/data-grid";
 import { useDispatch, useSelector } from "react-redux"
 import { ConvertToLookUp } from "../../../../../../common/Grid/lookUpUtils";
 import { masterManufactureAction, masterManufactureSelector } from "../../../slice";
@@ -16,16 +16,28 @@ const RouteGrid = () => {
     const dispatch = useDispatch();
     const { focusRow, dlgRouteSelectRowKey } = useSelector(masterManufactureSelector.all);
 
-    const [selectedRowKeys, setSelectedRowKeys] = useState(0);
+    // const [tasks, setTasks] = useState(focusRow);
 
-    // const onOptionChanged = (e) => {
-    //     if(e.fullName == 'focusedRowIndex') {
-    //         if(e.value > -1) {
-    //             setSelectedRowKeys(e.value);
-    //             dispatch(masterManufactureAction.setDlgRouteSelectRowKey(e.value));
-    //         }
-    //     }
-    // }
+
+    const onReorder = (e) => {
+        var copy = _.cloneDeep(focusRow);
+        var temp = copy.routeList[e.toIndex];
+
+        copy.routeList[e.toIndex] = copy.routeList[e.fromIndex];
+        copy.routeList[e.fromIndex] = temp;
+
+        copy.routeList.forEach((v, index) =>{
+            v.procSeq = (index + 1)
+
+            if(v.passYN == true) {
+                v.routingSeq = 0;
+            } else {
+                v.routingSeq = (index + 1);
+            }
+        })
+        
+        dispatch(masterManufactureAction.setFocusRow(copy))
+    }
 
     const onFocusedRowChanged = (e) => {
         dispatch(masterManufactureAction.setDlgRouteSelectRowKey(e.row.rowIndex));
@@ -96,6 +108,11 @@ const RouteGrid = () => {
                             }}
                             height={400}
                         >
+                            <RowDragging
+                                allowReordering={true}
+                                onReorder={onReorder}
+                                showDragIcons={true}
+                            />
                             <Editing mode="cell" allowUpdating={true} allowAdding={false} allowDeleting={true} />
                             <Column dataField="procSeq" width={60} caption="순번" allowEditing={false}></Column>
                             <Column dataField="procCode" width={200} caption="공정" editCellType="Process" editCellComponent={SearchLookUp}>
