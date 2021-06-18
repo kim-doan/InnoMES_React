@@ -11,11 +11,7 @@ import BomGrid from "./components/BomGrid"
 import RouteGrid from "./components/RouteGrid"
 const ManufactureProcessRevDialog = () => {
     const dispatch = useDispatch();
-    const { focusRow, success } = useSelector(masterManufactureSelector.all);
-
-    useEffect(() => {
-        console.log(focusRow)
-    }, [focusRow])
+    const { focusRow } = useSelector(masterManufactureSelector.all);
 
     const colCountByScreen = {
         sm: 2,
