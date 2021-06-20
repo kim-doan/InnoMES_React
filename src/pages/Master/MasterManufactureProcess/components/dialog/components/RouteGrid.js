@@ -14,10 +14,19 @@ import ResponsiveBox, { Col, Item, Location, Row } from "devextreme-react/respon
 
 const RouteGrid = () => {
     const dispatch = useDispatch();
-    const { focusRow, dlgRouteSelectRowKey } = useSelector(masterManufactureSelector.all);
+    const { focusRow, dlgRouteSelectRowKey, dlgType } = useSelector(masterManufactureSelector.all);
+    const [visible, setVisible] = useState(true);
 
-    // const [tasks, setTasks] = useState(focusRow);
-
+    useEffect(() => {
+        switch(dlgType) {
+            case "REV": // 개정
+                setVisible(true);
+                break;
+            case "MOD": // 수정
+                setVisible(false);
+                break;
+        }
+    }, [dlgType])
 
     const onReorder = (e) => {
         var copy = _.cloneDeep(focusRow);
@@ -83,7 +92,7 @@ const RouteGrid = () => {
                         row={0}
                         col={0}
                     ></Location>
-                    <ControlBox mainAdd={mainAdd}></ControlBox>
+                    <ControlBox mainAdd={mainAdd} mainAddDisabled={visible}></ControlBox>
                 </Item>
                 <Item>
                     <Location
@@ -108,14 +117,16 @@ const RouteGrid = () => {
                             }}
                             height={400}
                         >
+                            {visible && 
                             <RowDragging
                                 allowReordering={true}
                                 onReorder={onReorder}
                                 showDragIcons={true}
                             />
-                            <Editing mode="cell" allowUpdating={true} allowAdding={false} allowDeleting={true} />
+                            }
+                            <Editing mode="cell" allowUpdating={true} allowAdding={false} allowDeleting={visible} />
                             <Column dataField="procSeq" width={60} caption="순번" allowEditing={false}></Column>
-                            <Column dataField="procCode" width={200} caption="공정" editCellType="Process" editCellComponent={SearchLookUp}>
+                            <Column dataField="procCode" width={200} caption="공정" editCellType="Process" editCellComponent={SearchLookUp} allowEditing={visible}>
                                 <Lookup
                                     dataSource={GetProcessNode()}
                                     displayExpr="procName"
@@ -124,7 +135,7 @@ const RouteGrid = () => {
                                 <RequiredRule />
                                 <CustomRule type="custom" validationCallback={routeUniqueValidate} message="라우팅 공정은 중복될 수 없습니다." />
                             </Column>
-                            <Column dataField="passYN" caption="패스공정여부" dataType="boolean"></Column>
+                            <Column dataField="passYN" caption="패스공정여부" dataType="boolean" allowEditing={visible}></Column>
                             <Column dataField="outQnt" caption="산출장입량" format="#,##0.##"></Column>
                             <Column dataField="qntUnit" caption="장입단위">
                                 <Lookup

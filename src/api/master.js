@@ -224,6 +224,11 @@ const setManufactureProcessRev = (param) => {
   return axios.post(address + '/master/manufactureProcess/save', param).then((response) => response.data)
 }
 
+//제조공정정보 수정
+const setManufactureProcessMod = (param) => {
+  return axios.post(address + '/master/manufactureProcess/update', param).then((response) => response.data)
+}
+
 export {
   getProductList,
   setProductList,
@@ -257,5 +262,6 @@ export {
   getMasterFailCodeList,
   setMasterFailCodeList,
   getManufactureItemList,
-  setManufactureProcessRev
+  setManufactureProcessRev,
+  setManufactureProcessMod
 }

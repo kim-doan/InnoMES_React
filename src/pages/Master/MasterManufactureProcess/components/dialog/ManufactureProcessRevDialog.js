@@ -11,7 +11,7 @@ import BomGrid from "./components/BomGrid"
 import RouteGrid from "./components/RouteGrid"
 const ManufactureProcessRevDialog = () => {
     const dispatch = useDispatch();
-    const { focusRow } = useSelector(masterManufactureSelector.all);
+    const { focusRow, dlgType, isLoading } = useSelector(masterManufactureSelector.all);
 
     const colCountByScreen = {
         sm: 2,
@@ -288,8 +288,16 @@ const ManufactureProcessRevDialog = () => {
                                     type="success"
                                     stylingMode="contained"
                                     style={{float:"right", marginTop: 20}}
+                                    disabled={isLoading}
                                     onClick={() => {
-                                        dispatch(masterManufactureAction.revision())
+                                        switch(dlgType) {
+                                            case "REV":
+                                                dispatch(masterManufactureAction.revision())
+                                                break;
+                                            case "MOD":
+                                                dispatch(masterManufactureAction.modify())
+                                                break;
+                                        }
                                     }}
                                 />
                             </div>

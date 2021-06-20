@@ -35,12 +35,14 @@ const MasterManufactureProcess = () => {
     //개정
     const mainRev = () => {
         dispatch(masterManufactureAction.setDlgState(true))
+        dispatch(masterManufactureAction.setDlgType("REV"))
         setDlgTitle("제조공정정보 개정");
     }
 
     //수정
     const mainMod = () => {
         dispatch(masterManufactureAction.setDlgState(true))
+        dispatch(masterManufactureAction.setDlgType("MOD"))
         setDlgTitle("제조공정정보 수정");
     }
 

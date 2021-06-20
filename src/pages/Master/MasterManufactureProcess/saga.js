@@ -1,5 +1,5 @@
 import { call, put, select, takeLatest } from 'redux-saga/effects';
-import { getManufactureItemList, setManufactureProcessRev } from '../../../api/master';
+import { getManufactureItemList, setManufactureProcessMod, setManufactureProcessRev } from '../../../api/master';
 import { toastAction } from '../../../common/Toast/slice';
 import { masterManufactureAction, masterManufactureSelector } from './slice';
 
@@ -22,7 +22,7 @@ export function* manufactureItemListLoad() {
 }
 
 export function* revisionManufactureProcess() {
-    const { revisionSuccess, revisionFail, setDlgState, complete, load } = masterManufactureAction
+    const { revisionSuccess, revisionFail, setDlgState, complete } = masterManufactureAction
     const { show } = toastAction
 
     try {
@@ -48,9 +48,37 @@ export function* revisionManufactureProcess() {
     }
 }
 
+export function* modifyManufactureProcess() {
+    const { modifySuccess, modifyFail, setDlgState, complete } = masterManufactureAction
+    const { show } = toastAction
+
+    try {
+        const param = yield select(masterManufactureSelector.focusRow)
+        const result = yield call(setManufactureProcessMod, param)
+        if(result.success) {
+            yield put(show({ type: 'success', message: '제조공정정보를 수정했습니다.'}))
+            yield put(complete({ routeList: param.routeList }))
+            yield put(setDlgState(false))
+        } else {
+            yield put(show({ type: 'error', message: result.msg}))
+        }
+
+        yield put(
+            modifySuccess({
+                success: result.success,
+                msg: result.code,
+            })
+        )
+    } catch(err) {
+        yield put(modifyFail(err))
+        yield put(show({ type: 'error', displayTime: 3000, message: "제조공정정보 수정에 실패했습니다. 관리자에게 문의하세요."}))
+    }
+}
+
 export function* watchMasterManufactureProcess() {
-    const { load, revision } = masterManufactureAction;
+    const { load, revision, modify } = masterManufactureAction;
 
     yield takeLatest(load, manufactureItemListLoad);
     yield takeLatest(revision, revisionManufactureProcess);
+    yield takeLatest(modify, modifyManufactureProcess);
 }

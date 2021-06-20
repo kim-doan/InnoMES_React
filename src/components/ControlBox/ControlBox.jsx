@@ -67,6 +67,7 @@ const ControlBox = (props) => {
                             type="default"
                             stylingMode="contained"
                             onClick={props.mainAdd}
+                            disabled={props.mainAddDisabled === undefined ? false : !props.mainAddDisabled}
                         />
                     </div>
                 )}
