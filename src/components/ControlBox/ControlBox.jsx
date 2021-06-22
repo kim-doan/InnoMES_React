@@ -55,6 +55,18 @@ const ControlBox = (props) => {
                         />
                     </div>
                 )}
+                {props.mainCopy !== undefined && (
+                    <div className="button">
+                        <Button
+                            width={100}
+                            height={35}
+                            text="불러오기"
+                            type="success"
+                            stylingMode="contained"
+                            onClick={props.mainCopy}
+                        />
+                    </div>
+                )}
             </div>
             <div className="form-main-2">
                 {props.mainAdd !== undefined && (

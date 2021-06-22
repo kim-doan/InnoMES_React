@@ -47,9 +47,9 @@ const MasterManufactureProcess = () => {
     }
 
     //이력보기
-    const mainRevLog = () => {
+    // const mainRevLog = () => {
 
-    }
+    // }
 
     return (
         <div>
@@ -73,7 +73,7 @@ const MasterManufactureProcess = () => {
                 <ControlBox
                     mainRev={mainRev}
                     mainMod={mainMod}
-                    mainRevLog={mainRevLog}
+                    // mainRevLog={mainRevLog}
                 ></ControlBox>
                 <ResponsiveBox>
                     <Row></Row>

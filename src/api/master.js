@@ -210,12 +210,14 @@ const setMasterFailCodeList = (param) => {
   return axios.post(address + '/master/failCode/save', param).then((response) => response.data)
 }
 // 제조공정정보 API
+
+//제조공정정보 조회
 const getManufactureItemList = (param) => {
   var pageable = new URLSearchParams()
   pageable.append('size', param.pageable.size)
   pageable.append('page', param.pageable.page)
   return axios
-    .post(address + '/master/manufactureItem?' + pageable.toString(), param.searchParam)
+    .post(address + '/master/manufactureProcess?' + pageable.toString(), param.searchParam)
     .then((response) => response.data)
 }
 

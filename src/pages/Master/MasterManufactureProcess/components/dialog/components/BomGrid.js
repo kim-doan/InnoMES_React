@@ -34,10 +34,10 @@ const BomGrid = () => {
         copy.routeList[dlgRouteSelectRowKey].bomList[e.toIndex] = copy.routeList[dlgRouteSelectRowKey].bomList[e.fromIndex];
         copy.routeList[dlgRouteSelectRowKey].bomList[e.fromIndex] = temp;
 
-        copy.routeList[dlgRouteSelectRowKey].bomList.forEach((v, index) =>{
+        copy.routeList[dlgRouteSelectRowKey].bomList.forEach((v, index) => {
             v.bomSeq = (index + 1)
         })
-        
+
         dispatch(masterManufactureAction.setFocusRow(copy))
     }
 
@@ -53,6 +53,11 @@ const BomGrid = () => {
         dispatch(masterManufactureAction.addDlgBomList());
     }
 
+    //불러오기
+    const mainCopy = () => {
+        dispatch(masterManufactureAction.setDlgCopyState(true))
+    }
+
     return (
         <div style={{ marginTop: 20, marginLeft: 10 }}>
             <ResponsiveBox>
@@ -64,7 +69,7 @@ const BomGrid = () => {
                         row={0}
                         col={0}
                     ></Location>
-                    <ControlBox mainAdd={mainAdd}></ControlBox>
+                    <ControlBox mainAdd={mainAdd} mainCopy={mainCopy}></ControlBox>
                 </Item>
                 <Item>
                     <Location

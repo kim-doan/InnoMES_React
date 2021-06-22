@@ -18,11 +18,13 @@ export const initialState = {
     manufactureList: [], //전체
     itemSelectRowKey: 0, // 포커스 품목 index
     routeSelectRowKey: 0, // 포커스 라우팅 index
-    //다이얼로그
+    //다이얼로그 (개정, 수정)
     dlgState: false, // 팝업상태 false: 닫음, true: 열음
     dlgType: "REV", // 다이얼 유형 REV: 개정, MOD: 수정 
     focusRow: {}, // 포커스된 요소정보 
     dlgRouteSelectRowKey: 0,
+    //다이얼로그 (불러오기)
+    dlgCopyState: false, //팝업상태 false: 닫음, true 열음
 }
 
 const reducers = {
@@ -76,6 +78,15 @@ const reducers = {
         state.manufactureList[state.itemSelectRowKey].description = focusRow.description;
         state.manufactureList[state.itemSelectRowKey].routeList = focusRow.routeList;
     },
+    copy: (state, payload) => {
+        var target = _.filter(state.manufactureList, { 'prdtId' : payload.payload });
+
+        if(target.length <= 0) {
+            return;
+        }
+        
+        state.focusRow.routeList = target[0].routeList;
+    },
     addDlgRouteList: (state, payload) => {
         state.focusRow.routeList.push({
             procSeq : state.focusRow.routeList.length + 1, 
@@ -114,6 +125,9 @@ const reducers = {
         if(payload.payload === false) {
             state.focusRow = state.manufactureList[state.itemSelectRowKey]
         }
+    },
+    setDlgCopyState: (state, payload) => {
+        state.dlgCopyState = payload.payload  
     },
     setDlgType: (state, payload) => {
         state.dlgType = payload.payload
@@ -229,6 +243,11 @@ const selectDlgState = createSelector(
     (dlgState) => dlgState
 )
 
+const selectDlgCopyState = createSelector(
+    (state) => state.dlgCopyState,
+    (dlgCopyState) => dlgCopyState
+)
+
 const selectDlgType = createSelector(
     (state) => state.dlgType,
     (dlgType) => dlgType
@@ -279,6 +298,7 @@ const selectAllState = createSelector(
     selectErrorState,
     selectSuccessState,
     selectDlgState,
+    selectDlgCopyState,
     selectDlgType,
     selectMsgState,
     selectItemSelectRowKey,
@@ -288,12 +308,13 @@ const selectAllState = createSelector(
     selectFocusRowState,
     selectDefaultParamState,
     selectTotalCountState,
-    (isLoading, error, success, dlgState, dlgType, msg, itemSelectRowKey, routeSelectRowKey, dlgRouteSelectRowKey, manufactureList, focusRow, defaultParam, totalCount) => {
+    (isLoading, error, success, dlgState, dlgCopyState, dlgType, msg, itemSelectRowKey, routeSelectRowKey, dlgRouteSelectRowKey, manufactureList, focusRow, defaultParam, totalCount) => {
         return {
             isLoading,
             error,
             success,
             dlgState,
+            dlgCopyState,
             dlgType,
             msg,
             itemSelectRowKey,
@@ -312,6 +333,7 @@ export const masterManufactureSelector = {
     error: (state) => selectErrorState(state[MASTER_MANUFACTURE_PROCESS]),
     success: (state) => selectSuccessState(state[MASTER_MANUFACTURE_PROCESS]),
     dlgState: (state) => selectDlgState(state[MASTER_MANUFACTURE_PROCESS]),
+    dlgCopyState: (state) => selectDlgCopyState(state[MASTER_MANUFACTURE_PROCESS]),
     dlgType: (state) => selectDlgType(state[MASTER_MANUFACTURE_PROCESS]),
     msg: (state) => selectMsgState(state[MASTER_MANUFACTURE_PROCESS]),
     itemSelectRowKey: (state) => selectItemSelectRowKey(state[MASTER_MANUFACTURE_PROCESS]),
