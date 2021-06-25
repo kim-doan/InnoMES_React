@@ -10,9 +10,9 @@ import Form, {
 } from 'devextreme-react/form';
 import LoadIndicator from 'devextreme-react/load-indicator';
 import notify from 'devextreme/ui/notify';
-import { useAuth } from '../../contexts/auth';
+import { useAuth } from '../../../contexts/auth';
 
-import './login-form.scss';
+import './Login.scss';
 
 export default function () {
   const history = useHistory();
@@ -73,7 +73,7 @@ export default function () {
               {
                 loading
                   ? <LoadIndicator width={'24px'} height={'24px'} visible={true} />
-                  : 'Sign In'
+                  : '로그인'
               }
             </span>
           </ButtonOptions>
@@ -95,6 +95,6 @@ export default function () {
   );
 }
 
-const emailEditorOptions = { stylingMode: 'filled', placeholder: 'Email', mode: 'email' };
-const passwordEditorOptions = { stylingMode: 'filled', placeholder: 'Password', mode: 'password' };
-const rememberMeEditorOptions = { text: 'Remember me', elementAttr: { class: 'form-text' } };
+const emailEditorOptions = { stylingMode: 'filled', placeholder: '아이디', mode: 'email' };
+const passwordEditorOptions = { stylingMode: 'filled', placeholder: '비밀번호', mode: 'password' };
+const rememberMeEditorOptions = { text: '아이디 저장', elementAttr: { class: 'form-text' } };

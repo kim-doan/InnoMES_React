@@ -81,11 +81,9 @@ const reducers = {
     copy: (state, payload) => {
         var target = _.filter(state.manufactureList, { 'prdtId' : payload.payload });
 
-        if(target.length <= 0) {
-            return;
+        if(target.length > 0) {
+            state.focusRow.routeList = target[0].routeList;
         }
-        
-        state.focusRow.routeList = target[0].routeList;
     },
     addDlgRouteList: (state, payload) => {
         state.focusRow.routeList.push({

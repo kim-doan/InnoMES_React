@@ -7,7 +7,7 @@ export default function () {
   return (
     <Switch>
       <Route exact path='/login' >
-        <SingleCard title="Sign In">
+        <SingleCard title="로그인">
           <LoginForm />
         </SingleCard>
       </Route>
